@@ -1,0 +1,54 @@
+package testCase;
+
+import jakarta.persistence.*;
+import requirement.Requirement;
+
+import java.io.Serializable;
+
+@Entity
+public class TestCase implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int testCaseId;
+
+    @Column
+    private String description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "requirement", nullable = false)
+    private Requirement requirement;
+
+    public TestCase() {
+    }
+
+    public TestCase(int testCaseId, String description, Requirement requirement) {
+        this.testCaseId = testCaseId;
+        this.description = description;
+        this.requirement = requirement;
+    }
+
+    public int getTestCaseId() {
+        return testCaseId;
+    }
+
+    public void setTestCaseId(int testCaseId) {
+        this.testCaseId = testCaseId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
+    }
+}

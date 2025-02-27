@@ -21,6 +21,7 @@
   <h2>Artikel erfassen</h2>
   <h:form>
     <h:panelGrid columns="3" >
+
       <h:commandLink value="zurück" action="#{artikelController.zurueck()}"
                      rendered="#{artikelController.index gt 0}"/>
       <h:outputText value=" " rendered="#{artikelController.index == 0}"/>
