@@ -39,14 +39,14 @@ public class UserDAO {
         return query.getResultList();
     }
 
-    public List<User> getUserByRole(UserRoles role) {
+    public List<User> getUsersByRole(UserRoles role) {
         TypedQuery<User> query = entityManager.createQuery("select a from User a WHERE a.userRole = :role", User.class);
         query.setParameter("role", role);
         return query.getResultList();
+
     }
 
-    public void delete(Long id) {
-        User user = findById(id);
+    public void delete(User user) {
         if(user != null){
             entityManager.remove(user);
         }

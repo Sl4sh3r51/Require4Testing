@@ -21,6 +21,7 @@ public class TestCaseTestRun implements Serializable {
     @JoinColumn(name = "testrun")
     private TestRun testRun;
 
+    @Column
     private boolean passed;
 
     public TestCaseTestRun() {

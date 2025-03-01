@@ -44,8 +44,7 @@ public class RequirementDAO {
         return query.getResultList();
     }
 
-    public void delete(Long id) {
-        Requirement requirement = findById(id);
+    public void delete(Requirement requirement) {
         if(requirement != null) {
             entityManager.remove(requirement);
         }

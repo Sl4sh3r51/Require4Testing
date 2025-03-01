@@ -45,8 +45,7 @@ public class TestCaseTestRunDAO {
         return query.getResultList();
     }
 
-    public void delete(Long id) {
-        TestCaseTestRun testCaseTestRun = findById(id);
+    public void delete(TestCaseTestRun testCaseTestRun) {
         if(testCaseTestRun != null) {
             entityManager.remove(testCaseTestRun);
         }

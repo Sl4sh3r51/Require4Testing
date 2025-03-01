@@ -15,6 +15,8 @@ public class User implements Serializable {
 
     private String username;
 
+    private String password;
+
     @Enumerated(EnumType.STRING)
     private UserRoles userRole;
 
@@ -25,9 +27,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int userId, String username, UserRoles userRole, TestRun testRun) {
+    public User(int userId, String username,String password, UserRoles userRole, TestRun testRun) {
         this.userId = userId;
         this.username = username;
+        this.password = password;
         this.userRole = userRole;
         this.testRun = testRun;
     }
@@ -62,5 +65,13 @@ public class User implements Serializable {
 
     public void setTestRun(TestRun testRun) {
         this.testRun = testRun;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
