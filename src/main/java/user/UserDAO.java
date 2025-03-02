@@ -30,7 +30,7 @@ public class UserDAO {
         }
     }
 
-    public User findById(Long id) {
+    public User findById(int id) {
         return entityManager.find(User.class, id);
     }
 

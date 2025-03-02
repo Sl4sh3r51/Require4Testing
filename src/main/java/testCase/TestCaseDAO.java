@@ -30,7 +30,7 @@ public class TestCaseDAO {
         }
     }
 
-    public TestCase findById(Long testCaseId) {
+    public TestCase findById(int testCaseId) {
         return entityManager.find(TestCase.class, testCaseId);
     }
 

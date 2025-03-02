@@ -31,7 +31,7 @@ public class TestRunDAO {
         }
     }
 
-    public TestRun findById(Long id) {
+    public TestRun findById(int id) {
         return entityManager.find(TestRun.class, id);
     }
 

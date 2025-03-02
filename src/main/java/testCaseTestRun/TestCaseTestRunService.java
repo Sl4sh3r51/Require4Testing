@@ -26,7 +26,7 @@ public class TestCaseTestRunService {
         else logger.error("Das Objekt darf nicht null sein!");
     }
 
-    public TestCaseTestRun getTestCaseTestRunById(Long id) {
+    public TestCaseTestRun getTestCaseTestRunById(int id) {
         TestCaseTestRun testCaseTestRun = testCaseTestRunDAO.findById(id);
         if(testCaseTestRun == null) {
             logger.error("Es wurde kein Objekt mit der Id: " + id + " gefunden!");
@@ -50,7 +50,7 @@ public class TestCaseTestRunService {
         return testCaseTestRuns;
     }
 
-    public void deleteTestCaseTestRunById(Long id) {
+    public void deleteTestCaseTestRunById(int id) {
         TestCaseTestRun testCaseTestRun = testCaseTestRunDAO.findById(id);
         if(testCaseTestRun != null) {
             testCaseTestRunDAO.delete(testCaseTestRun);

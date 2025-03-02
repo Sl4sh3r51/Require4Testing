@@ -13,11 +13,11 @@ public class TestCaseTestRun implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int testCaseTestRunId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "testfall")
     private TestCase testCase;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "testrun")
     private TestRun testRun;
 
@@ -58,7 +58,7 @@ public class TestCaseTestRun implements Serializable {
         this.testRun = testRun;
     }
 
-    public boolean isPassed() {
+    public boolean getPassed() {
         return passed;
     }
 

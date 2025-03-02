@@ -21,7 +21,7 @@ public class TestCaseTestRunDAO {
 
     public TestCaseTestRunDAO(){}
 
-    public TestCaseTestRun findById(Long id) {
+    public TestCaseTestRun findById(int id) {
         return entityManager.find(TestCaseTestRun.class, id);
     }
 

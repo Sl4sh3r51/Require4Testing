@@ -28,7 +28,7 @@ public class UserService {
         }
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(int id) {
         User user = userDAO.findById(id);
         if(user == null){
             logger.error("User mit der Id " + id + " wurde nicht gefunden!");
@@ -51,7 +51,7 @@ public class UserService {
         return userDAO.getUsersByRole(role);
     }
 
-    public void deleteUserById(Long id) {
+    public void deleteUserById(int id) {
         User user = userDAO.findById(id);
         if(user == null){
             logger.trace("Es gibt kein Objekt mit der Id: " + id + " was gelöscht werden kann!");

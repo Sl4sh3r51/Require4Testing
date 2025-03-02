@@ -13,8 +13,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
+    @Column
     private String username;
 
+    @Column
     private String password;
 
     @Enumerated(EnumType.STRING)

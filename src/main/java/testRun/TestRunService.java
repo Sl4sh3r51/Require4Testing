@@ -29,7 +29,7 @@ public class TestRunService {
         }
     }
 
-    public TestRun getTestRunById(Long id) {
+    public TestRun getTestRunById(int id) {
         TestRun testRun = testRunDAO.findById(id);
         if(testRun == null) {
             logger.error("Es konnte kein Testlauf mit der Id " + id + " gefunden werden!");
@@ -45,14 +45,14 @@ public class TestRunService {
         return testRuns;
     }
 
-    public List<TestRun> findByTester(User tester) {
+    public List<TestRun> getTestRunsByTester(User tester) {
         if(tester == null) {
             throw new IllegalArgumentException("User darf nicht null sein!");
         }
         return testRunDAO.findByTester(tester);
     }
 
-    public void deleteTestRunById(Long id) {
+    public void deleteTestRunById(int id) {
         TestRun testRun = testRunDAO.findById(id);
         if(testRun == null) {
             logger.error("Es gibt keinen Testlauf mit der Id " + id + " was gelöscht werden kann!");

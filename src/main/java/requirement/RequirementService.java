@@ -26,7 +26,7 @@ public class RequirementService {
         else logger.error("Das Objekt: " + requirement + " darf nicht leer sein!");
     }
 
-    public Requirement getRequirementById(Long id) {
+    public Requirement getRequirementById(int id) {
         Requirement requirement = requirementDAO.findById(id);
         if(requirement == null){
             logger.error("Es gibt kein Objekt mit der Id: " + id + " !");
@@ -49,7 +49,43 @@ public class RequirementService {
         return requirementDAO.findByRequirementStatus(status);
     }
 
-    public void deleteRequirementById(Long id) {
+    public List<Requirement> sortByVersion(boolean ascending) {
+        if(ascending){
+            return requirementDAO.sortByVersionAscending();
+        }
+        else {
+            return requirementDAO.sortByVersionDescending();
+        }
+    }
+
+    public List<Requirement> sortByCreationDate(boolean ascending) {
+        if(ascending){
+            return requirementDAO.sortByCreationDateAscending();
+        }
+        else {
+            return requirementDAO.sortByCreationDateDescending();
+        }
+    }
+
+    public List<Requirement> sortByModificationDate(boolean ascending) {
+        if(ascending){
+            return requirementDAO.sortByModificationDateAscending();
+        }
+        else {
+            return requirementDAO.sortByModificationDateDescending();
+        }
+    }
+
+    public List<Requirement> sortByPriority(boolean ascending) {
+        if(ascending){
+            return requirementDAO.sortByPriorityAscending();
+        }
+        else {
+            return requirementDAO.sortByPriorityDescending();
+        }
+    }
+
+    public void deleteRequirementById(int id) {
         Requirement requirement = requirementDAO.findById(id);
         if(requirement != null){
             requirementDAO.delete(requirement);

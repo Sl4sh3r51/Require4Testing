@@ -28,7 +28,7 @@ public class TestCaseService {
         }
     }
 
-    public TestCase getTestCaseById(Long id) {
+    public TestCase getTestCaseById(int id) {
         TestCase testCase = testCaseDAO.findById(id);
         if(testCase == null){
             logger.error("Es wurde kein Testfall mit der Id: " + id + " gefunden!");
@@ -44,7 +44,7 @@ public class TestCaseService {
         return testCases;
     }
 
-    public void deleteTestCaseById(Long id) {
+    public void deleteTestCaseById(int id) {
         TestCase testCase = testCaseDAO.findById(id);
         if(testCase != null){
             testCaseDAO.delete(testCase);
