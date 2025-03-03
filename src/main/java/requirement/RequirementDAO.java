@@ -1,11 +1,10 @@
 package requirement;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Typed;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -15,13 +14,9 @@ public class RequirementDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject
-    public RequirementDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
     public RequirementDAO(){}
 
+    @Transactional
     public void save(Requirement requirement) {
         if ((Integer)requirement.getRequirementId() == null) {
             entityManager.persist(requirement);
@@ -85,6 +80,7 @@ public class RequirementDAO {
         return query.getResultList();
     }
 
+    @Transactional
     public void delete(Requirement requirement) {
         if(requirement != null) {
             entityManager.remove(requirement);

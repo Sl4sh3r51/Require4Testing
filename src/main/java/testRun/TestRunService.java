@@ -11,13 +11,13 @@ import java.util.List;
 @ApplicationScoped
 public class TestRunService {
 
-    private final TestRunDAO testRunDAO;
+    @Inject
+    private TestRunDAO testRunDAO;
 
     Logger logger = LoggerFactory.getLogger(TestRunService.class);
 
-    @Inject
-    public TestRunService(TestRunDAO testRunDAO) {
-        this.testRunDAO = testRunDAO;
+    public TestRunService() {
+
     }
 
     public void saveTestRun(TestRun testRun) {

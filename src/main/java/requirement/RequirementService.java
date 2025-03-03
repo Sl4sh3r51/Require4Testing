@@ -10,13 +10,14 @@ import java.util.List;
 @ApplicationScoped
 public class RequirementService {
 
-    private final RequirementDAO requirementDAO;
+    @Inject
+    private RequirementDAO requirementDAO;
 
     Logger logger = LoggerFactory.getLogger(RequirementService.class);
 
-    @Inject
-    public RequirementService(RequirementDAO requirementDAO) {
-        this.requirementDAO = requirementDAO;
+
+    public RequirementService() {
+
     }
 
     public void saveRequirement(Requirement requirement) {

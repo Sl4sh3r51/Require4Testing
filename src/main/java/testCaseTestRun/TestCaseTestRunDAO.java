@@ -1,10 +1,10 @@
 package testCaseTestRun;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -14,17 +14,13 @@ public class TestCaseTestRunDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject
-    public TestCaseTestRunDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
     public TestCaseTestRunDAO(){}
 
     public TestCaseTestRun findById(int id) {
         return entityManager.find(TestCaseTestRun.class, id);
     }
 
+    @Transactional
     public void save(TestCaseTestRun testCaseTestRun) {
         if((Integer)testCaseTestRun.getTestCaseTestRunId() == null){
             entityManager.persist(testCaseTestRun);
@@ -45,6 +41,7 @@ public class TestCaseTestRunDAO {
         return query.getResultList();
     }
 
+    @Transactional
     public void delete(TestCaseTestRun testCaseTestRun) {
         if(testCaseTestRun != null) {
             entityManager.remove(testCaseTestRun);

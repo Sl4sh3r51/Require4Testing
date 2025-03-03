@@ -5,39 +5,31 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <link rel="stylesheet" type="text/css" media="screen" href="style.css"/>
-    <title>Zander Filz Shop: Login</title>
+    <title>Require4Testing: Login</title>
 </h:head>
 <h:body>
-    <p><img id="kopf_links" src="logo.jpg" width="250" alt="Logo"/></p>
-    <p id="kopf_rechts">
-        <h:outputText value="#{anschrift.name}"/>
-        <br/>
-        <h:outputText value="#{anschrift.strasse} #{anschrift.hausnummer}"/>
-        <br/>
-        <h:outputText value="#{anschrift.plz} #{anschrift.ort}"/>
-    </p>
-    <h1>Zander Filz Shop: Login</h1>
+    <p><img src="require4testing-logo.png" width="500" height="400" alt="Logo"/></p>
+    <h1>Require4Testing: Login</h1>
     <h:form>
-
         <p>
             <h:outputLabel value="Benutzername:" for="user"/>
-            <h:inputText id="user" value="#{loginController.user}" size="40" required="true">
-                <f:event type="postValidate" listener="#{loginController.postValidateUser}"/>
-            </h:inputText>
+            <p:inputText id="user" value="#{loginBean.username}" size="40" required="true">
+                <f:event type="postValidate" listener="#{loginBean.ValidateUser}"/>
+            </p:inputText>
             <h:message for="user" styleClass="error"/>
         </p>
 
         <p>
 
             <h:outputLabel value="Passwort: " for="password"/>
-            <h:inputSecret id="password" value="#{loginController.password}" size="40" required="true"
-                validator="#{loginController.validateLogin}"/>
+            <p:password id="password" value="#{loginBean.password}" required="true" toggleMask="true" redisplay="true"
+                validator="#{loginBean.validatePassword}"/>
             <h:message for="password" styleClass="error"/>
         </p>
 
 
-        <p class="error"><h:outputText value="#{loginController.failureMessage}"/></p>
-        <h:commandButton action="#{loginController.login}" value="Login"/>
+        <p class="error"><h:outputText value="#{loginBean.errorMessage}"/></p>
+        <p:commandButton action="#{loginBean.login}" value="Login"/>
     </h:form>
     <p id="fussnote">Bitte beachten Sie: <br/> Diese Seite ist nur ein Entwurf!</p>
 </h:body>

@@ -4,25 +4,22 @@
              version="2.0">
 
     <persistence-unit name="require4Testing">
-
-
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <!-- Database connection settings -->
             <!-- Adapted for use with XAMPP/MySQL/phpAdmin -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/require4Testing"/>
-            <property name="jakarta.persistence.jdbc.user" value="root" />
-            <property name="jakarta.persistence.jdbc.password" value="" />
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 
-            <!-- Added details for -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="none" />
+            <!-- Option for Hibernate DDL Creation -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
 
             <!-- Echo all executed SQL to console -->
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="true" />
-            <property name="hibernate.highlight_sql" value="true" />
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
         </properties>
 
     </persistence-unit>

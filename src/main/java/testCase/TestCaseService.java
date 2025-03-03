@@ -10,13 +10,14 @@ import java.util.List;
 @ApplicationScoped
 public class TestCaseService {
 
-    private final TestCaseDAO testCaseDAO;
+    @Inject
+    private TestCaseDAO testCaseDAO;
 
     Logger logger = LoggerFactory.getLogger(TestCaseService.class);
 
-    @Inject
-    public TestCaseService(TestCaseDAO testCaseDAO) {
-        this.testCaseDAO = testCaseDAO;
+
+    public TestCaseService() {
+
     }
 
     public void saveTestCase(TestCase testCase) {

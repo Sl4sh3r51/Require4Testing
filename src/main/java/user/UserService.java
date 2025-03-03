@@ -10,53 +10,67 @@ import java.util.List;
 @ApplicationScoped
 public class UserService {
 
-    private final UserDAO userDAO;
+    @Inject
+    private UserDAO userDAO;
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Inject
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserService() {
+
     }
 
+
     public void saveUser(User user) {
-        if(user != null){
+        if (user != null) {
             userDAO.save(user);
-        }
-        else {
+        } else {
             logger.error("User ist null!");
         }
     }
 
     public User getUserById(int id) {
         User user = userDAO.findById(id);
-        if(user == null){
+        if (user == null) {
             logger.error("User mit der Id " + id + " wurde nicht gefunden!");
         }
         return user;
     }
 
-    public List<User> getAllUsers(){
+    public User getUserByUsername(String username) {
+        if (username == null) {
+            logger.error("Benutzername darf nicht leer sein!");
+            return null;
+        } else {
+            User foundUser = userDAO.findByUsername(username);
+            if (foundUser == null) {
+                logger.error("Es wurde kein Benutzer mit dem Name " + username + " gefunden!");
+                return null;
+            }
+            return foundUser;
+        }
+    }
+
+    public List<User> getAllUsers() {
         List<User> users = userDAO.findAll();
-        if(users == null){
+        if (users == null || users.isEmpty()) {
             logger.error("Es wurden keine User gefunden!");
         }
         return users;
     }
 
     public List<User> getUsersByRole(UserRoles role) {
-        if(role == null){
+        List<User> usersByRole = userDAO.getUsersByRole(role);
+        if (usersByRole == null || usersByRole.isEmpty()) {
             throw new IllegalArgumentException("Die Rolle eines Users darf nicht null sein!");
         }
-        return userDAO.getUsersByRole(role);
+        return usersByRole;
     }
 
     public void deleteUserById(int id) {
         User user = userDAO.findById(id);
-        if(user == null){
+        if (user == null) {
             logger.trace("Es gibt kein Objekt mit der Id: " + id + " was gelöscht werden kann!");
-        }
-        else {
+        } else {
             userDAO.delete(user);
         }
     }
