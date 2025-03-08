@@ -1,9 +1,12 @@
-package user;
+package utils;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
+import user.User;
+import user.UserDAO;
+import user.UserRoles;
 
 import java.sql.Driver;
 import java.sql.DriverManager;

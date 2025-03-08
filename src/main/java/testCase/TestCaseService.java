@@ -16,9 +16,7 @@ public class TestCaseService {
     Logger logger = LoggerFactory.getLogger(TestCaseService.class);
 
 
-    public TestCaseService() {
-
-    }
+    public TestCaseService() {}
 
     public void saveTestCase(TestCase testCase) {
         if(testCase != null){

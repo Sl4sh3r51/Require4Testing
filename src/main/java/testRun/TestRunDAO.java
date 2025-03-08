@@ -1,12 +1,10 @@
 package testRun;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.*;
 import user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -15,67 +13,130 @@ public class TestRunDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public TestRunDAO(){}
-
-    @Transactional
-    public void save(TestRun testRun) {
-        if((Integer)testRun.getTestRunId() == null) {
-            entityManager.persist(testRun);
+    public TestRunDAO(){
+        try {
+            entityManager = Persistence.createEntityManagerFactory("require4Testing").createEntityManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        else {
-            entityManager.merge(testRun);
+    }
+
+
+    public void save(TestRun testRun) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try{
+            transaction.begin();
+            if((Integer)testRun.getTestRunId() == null) {
+                entityManager.persist(testRun);
+            }
+            else {
+                entityManager.merge(testRun);
+            }
+            transaction.commit();
+        } catch (Exception exception) {
+            if(transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw exception;
         }
     }
 
     public TestRun findById(int id) {
-        return entityManager.find(TestRun.class, id);
+        try{
+            return entityManager.find(TestRun.class, id);
+        } catch (Exception exception) {
+            return null;
+        }
     }
 
     public List<TestRun> findAll() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a", TestRun.class);
-        return query.getResultList();
+        try{
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a", TestRun.class);
+            return query.getResultList();
+        } catch (Exception exception) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> sortByRunNumberAscending() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.runNumber ASC ", TestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.runNumber ASC ", TestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> sortByExecutionTimeAscending() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionTime ASC ", TestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionTime ASC ", TestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> sortByExecutionDateAscending() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionDate ASC ", TestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionDate ASC ", TestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> sortByRunNumberDescending() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.runNumber desc ", TestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.runNumber desc ", TestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> sortByExecutionTimeDescending() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionTime desc ", TestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionTime desc ", TestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> sortByExecutionDateDescending() {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionDate desc ", TestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a ORDER BY a.executionDate desc ", TestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestRun> findByTester(User tester) {
-        TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a where a.tester = :tester ", TestRun.class);
-        query.setParameter("tester", tester);
-        return query.getResultList();
+        try {
+            TypedQuery<TestRun> query = entityManager.createQuery("select a from TestRun a where a.tester = :tester ", TestRun.class);
+            query.setParameter("tester", tester);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
-    @Transactional
+
     public void delete(TestRun testRun) {
-        if(testRun != null) {
-            entityManager.remove(testRun);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            if(testRun != null) {
+                entityManager.remove(testRun);
+            }
+            transaction.commit();
+        } catch (Exception exception) {
+            if(transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw exception;
         }
     }
 }

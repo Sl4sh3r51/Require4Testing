@@ -37,7 +37,7 @@ public class RequirementService {
 
     public List<Requirement> getAllRequirements() {
         List<Requirement> requirements = requirementDAO.findAll();
-        if(requirements == null){
+        if(requirements == null || requirements.isEmpty()){
             logger.error("Es wurden keine Anforderungen gefunden!");
         }
         return requirements;
@@ -52,37 +52,69 @@ public class RequirementService {
 
     public List<Requirement> sortByVersion(boolean ascending) {
         if(ascending){
-            return requirementDAO.sortByVersionAscending();
+            List<Requirement> requirementsAscended = requirementDAO.sortByVersionAscending();
+            if(requirementsAscended == null || requirementsAscended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsAscended;
         }
         else {
-            return requirementDAO.sortByVersionDescending();
+            List<Requirement> requirementsDescended = requirementDAO.sortByVersionDescending();
+            if(requirementsDescended == null || requirementsDescended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsDescended;
         }
     }
 
     public List<Requirement> sortByCreationDate(boolean ascending) {
         if(ascending){
-            return requirementDAO.sortByCreationDateAscending();
+            List<Requirement> requirementsAscended = requirementDAO.sortByCreationDateAscending();
+            if(requirementsAscended == null || requirementsAscended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsAscended;
         }
         else {
-            return requirementDAO.sortByCreationDateDescending();
+            List<Requirement> requirementsDescended = requirementDAO.sortByCreationDateDescending();
+            if(requirementsDescended == null || requirementsDescended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsDescended;
         }
     }
 
     public List<Requirement> sortByModificationDate(boolean ascending) {
         if(ascending){
-            return requirementDAO.sortByModificationDateAscending();
+            List<Requirement> requirementsAscended = requirementDAO.sortByModificationDateAscending();
+            if(requirementsAscended == null || requirementsAscended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsAscended;
         }
         else {
-            return requirementDAO.sortByModificationDateDescending();
+            List<Requirement> requirementsDescended = requirementDAO.sortByModificationDateDescending();
+            if(requirementsDescended == null || requirementsDescended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsDescended;
         }
     }
 
     public List<Requirement> sortByPriority(boolean ascending) {
         if(ascending){
-            return requirementDAO.sortByPriorityAscending();
+            List<Requirement> requirementsAscended = requirementDAO.sortByPriorityAscending();
+            if(requirementsAscended == null || requirementsAscended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsAscended;
         }
         else {
-            return requirementDAO.sortByPriorityDescending();
+            List<Requirement> requirementsDescended = requirementDAO.sortByPriorityDescending();
+            if(requirementsDescended == null || requirementsDescended.isEmpty()){
+                logger.error("Es wurden keine Anforderungen gefunden, die sortiert werden können!");
+            }
+            return requirementsDescended;
         }
     }
 

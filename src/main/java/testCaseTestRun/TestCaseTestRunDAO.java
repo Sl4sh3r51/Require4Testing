@@ -1,11 +1,9 @@
 package testCaseTestRun;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -14,37 +12,76 @@ public class TestCaseTestRunDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public TestCaseTestRunDAO(){}
-
-    public TestCaseTestRun findById(int id) {
-        return entityManager.find(TestCaseTestRun.class, id);
+    public TestCaseTestRunDAO(){
+        try {
+            entityManager = Persistence.createEntityManagerFactory("require4Testing").createEntityManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
-    @Transactional
-    public void save(TestCaseTestRun testCaseTestRun) {
-        if((Integer)testCaseTestRun.getTestCaseTestRunId() == null){
-            entityManager.persist(testCaseTestRun);
+    public TestCaseTestRun findById(int id) {
+        try {
+            return entityManager.find(TestCaseTestRun.class, id);
+        } catch (Exception e) {
+            return null;
         }
-        else{
-            entityManager.merge(testCaseTestRun);
+    }
+
+
+    public void save(TestCaseTestRun testCaseTestRun) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            if((Integer)testCaseTestRun.getTestCaseTestRunId() == null){
+                entityManager.persist(testCaseTestRun);
+            }
+            else{
+                entityManager.merge(testCaseTestRun);
+            }
+            transaction.commit();
+        } catch (Exception exception) {
+            if(transaction != null && transaction.isActive()){
+                transaction.rollback();
+            }
+            throw exception;
         }
     }
 
     public List<TestCaseTestRun> findAll() {
-        TypedQuery<TestCaseTestRun> query = entityManager.createQuery("select a from TestCaseTestRun a", TestCaseTestRun.class);
-        return query.getResultList();
+        try {
+            TypedQuery<TestCaseTestRun> query = entityManager.createQuery("select a from TestCaseTestRun a", TestCaseTestRun.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TestCaseTestRun> findByResultStatus(boolean resultStatus) {
-        TypedQuery<TestCaseTestRun> query = entityManager.createQuery("SELECT a from TestCaseTestRun a where a.passed = :resultStatus", TestCaseTestRun.class);
-        query.setParameter("resultStatus", resultStatus);
-        return query.getResultList();
+        try {
+            TypedQuery<TestCaseTestRun> query = entityManager.createQuery("SELECT a from TestCaseTestRun a where a.passed = :resultStatus", TestCaseTestRun.class);
+            query.setParameter("resultStatus", resultStatus);
+            return query.getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
-    @Transactional
+
     public void delete(TestCaseTestRun testCaseTestRun) {
-        if(testCaseTestRun != null) {
-            entityManager.remove(testCaseTestRun);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            if(testCaseTestRun != null) {
+                entityManager.remove(testCaseTestRun);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if(transaction != null && transaction.isActive()){
+                transaction.rollback();
+            }
+            throw e;
         }
     }
 }

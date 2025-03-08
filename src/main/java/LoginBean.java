@@ -1,5 +1,4 @@
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIInput;
 import jakarta.faces.context.FacesContext;
@@ -7,10 +6,12 @@ import jakarta.faces.event.ComponentSystemEvent;
 import jakarta.faces.validator.ValidatorException;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import user.PasswordHasherUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import user.User;
 import user.UserRoles;
 import user.UserService;
+import utils.PasswordHasherUtil;
 
 import java.io.Serializable;
 
@@ -20,6 +21,8 @@ public class LoginBean implements Serializable {
 
     @Inject
     private UserService userService;
+
+    Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
     String username;
 
@@ -64,6 +67,8 @@ public class LoginBean implements Serializable {
     }
 
     public String logout() {
+        this.username = null;
+        this.password = null;
         return "login.xhtml?faces-redirect=true";
     }
 
@@ -77,23 +82,27 @@ public class LoginBean implements Serializable {
         this.user = userService.getUserByUsername(username);
         this.validLogin = PasswordHasherUtil.verifyPassword(passwordTCheck, user.getPassword());
         if(!validLogin){
-            throw new ValidatorException(new FacesMessage("Kein Korrekter Login!"));
+            logger.warn("Invalid username or password");
         }
     }
 
     public String login() {
         if(validLogin){
             if(user.getUserRole().equals(UserRoles.REQUIREMENT_ENGINEER)){
+                this.errorMessage = "";
                 return "requirementsEngineer.xhtml?faces-redirect=true";
             } else if (user.getUserRole().equals(UserRoles.TESTER)) {
+                this.errorMessage = "";
                 return "tester.xhtml?faces-redirect=true";
             } else if (user.getUserRole().equals(UserRoles.TESTMANAGER)) {
+                this.errorMessage = "";
                 return "testmanager.xhtml?faces-redirect=true";
             } else if (user.getUserRole().equals(UserRoles.TEST_CREATOR)) {
+                this.errorMessage = "";
                 return "testCreator.xhtml?faces-redirect=true";
             }
         }
         this.errorMessage = "Passwort und Benutzername nicht erkannt.";
-        return "";
+        return "login.xhtml?faces-redirect=true";
     }
 }

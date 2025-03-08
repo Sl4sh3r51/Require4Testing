@@ -49,7 +49,11 @@ public class TestRunService {
         if(tester == null) {
             throw new IllegalArgumentException("User darf nicht null sein!");
         }
-        return testRunDAO.findByTester(tester);
+        List<TestRun> testRunsForSpecificTester = testRunDAO.findByTester(tester);
+        if(testRunsForSpecificTester == null || testRunsForSpecificTester.isEmpty()) {
+            logger.error("Es wurden keine Testläufe für " + tester + " gefunden!");
+        }
+        return testRunsForSpecificTester;
     }
 
     public void deleteTestRunById(int id) {
@@ -64,28 +68,52 @@ public class TestRunService {
 
     public List<TestRun> sortByExecutionDate(boolean ascending) {
         if(ascending) {
-            return testRunDAO.sortByExecutionDateAscending();
+            List<TestRun> testRunsAscended = testRunDAO.sortByExecutionDateAscending();
+            if(testRunsAscended == null || testRunsAscended.isEmpty()) {
+                logger.error("Es wurden keine Testläufe gefunden, die sortiert werden können!");
+            }
+            return testRunsAscended;
         }
         else {
-            return testRunDAO.sortByExecutionDateDescending();
+            List<TestRun> testRunsDescended = testRunDAO.sortByExecutionDateDescending();
+            if(testRunsDescended == null || testRunsDescended.isEmpty()) {
+                logger.error("Es wurden keine Testläufe gefunden, die sortiert werden können!");
+            }
+            return testRunsDescended;
         }
     }
 
     public List<TestRun> sortByRunNumber(boolean ascending) {
         if(ascending) {
-            return testRunDAO.sortByRunNumberAscending();
+            List<TestRun> testRunsAscended = testRunDAO.sortByRunNumberAscending();
+            if(testRunsAscended == null || testRunsAscended.isEmpty()) {
+                logger.error("Es wurden keine Testläufe gefunden, die sortiert werden können!");
+            }
+            return testRunsAscended;
         }
         else {
-            return testRunDAO.sortByRunNumberDescending();
+            List<TestRun> testRunsDescended = testRunDAO.sortByRunNumberDescending();
+            if(testRunsDescended == null || testRunsDescended.isEmpty()) {
+                logger.error("Es wurden keine Testläufe gefunden, die sortiert werden können!");
+            }
+            return testRunsDescended;
         }
     }
 
     public List<TestRun> sortByExecutionTime(boolean ascending) {
         if(ascending) {
-            return testRunDAO.sortByExecutionTimeAscending();
+            List<TestRun> testRunsAscended = testRunDAO.sortByExecutionTimeAscending();
+            if(testRunsAscended == null || testRunsAscended.isEmpty()) {
+                logger.error("Es wurden keine Testläufe gefunden, die sortiert werden können!");
+            }
+            return testRunsAscended;
         }
         else {
-            return testRunDAO.sortByExecutionTimeDescending();
+            List<TestRun> testRunsDescended = testRunDAO.sortByExecutionTimeDescending();
+            if(testRunsDescended == null || testRunsDescended.isEmpty()) {
+                logger.error("Es wurden keine Testläufe gefunden, die sortiert werden können!");
+            }
+            return testRunsDescended;
         }
     }
 }

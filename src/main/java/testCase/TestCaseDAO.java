@@ -1,11 +1,9 @@
 package testCase;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -14,31 +12,67 @@ public class TestCaseDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public TestCaseDAO(){}
+    public TestCaseDAO(){
+        try{
+            entityManager = Persistence.createEntityManagerFactory("require4Testing").createEntityManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
-    @Transactional
+
     public void save(TestCase testCase) {
-        if((Integer) testCase.getTestCaseId() == null){
-            entityManager.persist(testCase);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try{
+            transaction.begin();
+            if((Integer) testCase.getTestCaseId() == null){
+                entityManager.persist(testCase);
+            }
+            else{
+                entityManager.merge(testCase);
+            }
+            transaction.commit();
+        } catch (Exception exception) {
+            if(transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw exception;
         }
-        else{
-            entityManager.merge(testCase);
-        }
+
     }
 
     public TestCase findById(int testCaseId) {
-        return entityManager.find(TestCase.class, testCaseId);
+        try{
+            return entityManager.find(TestCase.class, testCaseId);
+        } catch (Exception exception) {
+            return null;
+        }
     }
 
     public List<TestCase> findAll() {
-        TypedQuery<TestCase> query = entityManager.createQuery("SELECT a FROM TestCase a", TestCase.class);
-        return query.getResultList();
+        try{
+            TypedQuery<TestCase> query = entityManager.createQuery("SELECT a FROM TestCase a", TestCase.class);
+            return query.getResultList();
+        } catch (Exception exception) {
+            return new ArrayList<>();
+        }
     }
 
-    @Transactional
+
     public void delete(TestCase testCase) {
-        if(testCase != null) {
-            entityManager.remove(testCase);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try{
+            transaction.begin();
+            if(testCase != null) {
+                entityManager.remove(testCase);
+            }
+            transaction.commit();
+        } catch (Exception exception) {
+            if(transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw exception;
         }
     }
 }

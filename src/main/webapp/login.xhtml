@@ -8,29 +8,29 @@
     <title>Require4Testing: Login</title>
 </h:head>
 <h:body>
-    <p><img src="require4testing-logo.png" width="500" height="400" alt="Logo"/></p>
-    <h1>Require4Testing: Login</h1>
-    <h:form>
-        <p>
-            <h:outputLabel value="Benutzername:" for="user"/>
-            <p:inputText id="user" value="#{loginBean.username}" size="40" required="true">
-                <f:event type="postValidate" listener="#{loginBean.ValidateUser}"/>
-            </p:inputText>
-            <h:message for="user" styleClass="error"/>
-        </p>
+    <div class="container">
+        <img src="require4testing-logo.png" width="300" height="300" alt="Logo"/>
+        <h1>Require4Testing: Login</h1>
+        <h:form>
+            <div class="form-group">
+                <h:outputLabel value="Benutzername:" for="user"/>
+                <p:inputText id="user" value="#{loginBean.username}" size="40" required="true">
+                    <f:event type="postValidate" listener="#{loginBean.ValidateUser}"/>
+                </p:inputText>
+                <h:message for="user" styleClass="error"/>
+            </div>
 
-        <p>
+            <div class="form-group">
+                <h:outputLabel value="Passwort: " for="password"/>
+                <p:password id="password" value="#{loginBean.password}" required="true" toggleMask="true" redisplay="true" validator="#{loginBean.validatePassword}"/>
+                <h:message for="password" styleClass="error"/>
+            </div>
 
-            <h:outputLabel value="Passwort: " for="password"/>
-            <p:password id="password" value="#{loginBean.password}" required="true" toggleMask="true" redisplay="true"
-                validator="#{loginBean.validatePassword}"/>
-            <h:message for="password" styleClass="error"/>
-        </p>
+            <p:commandButton action="#{loginBean.login}" value="Login"/>
+            <p class="error"><h:outputText value="#{loginBean.errorMessage}"/></p>
+        </h:form>
 
-
-        <p class="error"><h:outputText value="#{loginBean.errorMessage}"/></p>
-        <p:commandButton action="#{loginBean.login}" value="Login"/>
-    </h:form>
-    <p id="fussnote">Bitte beachten Sie: <br/> Diese Seite ist nur ein Entwurf!</p>
+        <p id="fussnote">Bitte beachten Sie: <br/> Diese Seite ist nur ein Entwurf!</p>
+    </div>
 </h:body>
 </html>
