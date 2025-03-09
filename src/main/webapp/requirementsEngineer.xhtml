@@ -1,11 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Require4Testing - Anforderungen</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGroup layout="block" styleClass="logout-container">
+            <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
+                             immediate="true" ajax="false" title="Logout"/>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="title-container">
+            <h1>Anforderungen verwalten</h1>
+        </h:panelGroup>
+
+        <h:panelGrid columns="2">
+            <h:outputLabel for="title" value="Titel:"/>
+            <p:inputText id="title" value="#{requirementController.requirement.title}" required="true"/>
+
+            <h:outputLabel for="description" value="Beschreibung:"/>
+            <p:inputTextarea id="description" value="#{requirementController.requirement.description}" rows="3"
+                             required="true" autoResize="false"/>
+
+            <h:outputLabel for="requirementStatus" value="Status:"/>
+            <p:selectOneMenu id="requirementStatus" value="#{requirementController.requirement.requirementStatus}"
+                             converter="requirementConverter" required="true">
+                <f:selectItems value="#{requirementController.requirementStatus}"/>
+            </p:selectOneMenu>
+
+            <h:outputLabel for="version" value="Version:"/>
+            <p:inputText id="version" value="#{requirementController.requirement.version}"/>
+
+            <h:outputLabel for="priority" value="Priorität:"/>
+            <p:inputText id="priority" value="#{requirementController.requirement.priority}"/>
+
+            <p:commandButton value="Erstellen" action="#{requirementController.createRequirement}"
+                             update="requirementsTable"/>
+        </h:panelGrid>
+
+        <p:dataTable id="requirementsTable" value="#{requirementController.requirements}" var="req"
+                     filteredValue="#{requirementController.filteredRequirements}" sortMode="multiple"
+                     widgetVar="requirementsTableWidget">
+            <p:column headerText="Titel">
+                <h:outputText value="#{req.title}"/>
+            </p:column>
+            <p:column headerText="Beschreibung">
+                <h:outputText value="#{req.description}"/>
+            </p:column>
+            <p:column headerText="Status" filterBy="#{req.requirementStatus}" filterMatchMode="exact">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('requirementsTableWidget').filter()" style="width: 100%">
+                        <f:selectItem itemLabel="Alle" itemValue=""/>
+                        <f:selectItems value="#{requirementController.requirementStatus}"/>
+                    </p:selectOneMenu>
+                </f:facet>
+                <h:outputText value="#{req.requirementStatus}"/>
+            </p:column>
+            <p:column headerText="Version" sortBy="#{req.version}">
+                <h:outputText value="#{req.version}"/>
+            </p:column>
+            <p:column headerText="Priorität" sortBy="#{req.priority}">
+                <h:outputText value="#{req.priority}"/>
+            </p:column>
+            <p:column headerText="Erstelldatum" sortBy="#{req.creationDate}">
+                <h:outputText value="#{req.creationDate}">
+                    <f:converter converterId="localDateConverter"/>
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Änderungsdatum" sortBy="#{req.modificationDate}">
+                <h:outputText value="#{req.modificationDate}">
+                    <f:converter converterId="localDateConverter"/>
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger"
+                                 actionListener="#{requirementController.removeRequirement}" process="@this" update="requirementsTable">
+                    <f:attribute name="selectedRequirement" value="#{req}"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
 </html>

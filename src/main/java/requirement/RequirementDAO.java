@@ -21,11 +21,10 @@ public class RequirementDAO {
         }
     }
 
-
     public void save(Requirement requirement) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
-
+            transaction.begin();
             if ((Integer) requirement.getRequirementId() == null) {
                 entityManager.persist(requirement);
             } else {
@@ -138,7 +137,6 @@ public class RequirementDAO {
             return new ArrayList<>();
         }
     }
-
 
     public void delete(Requirement requirement) {
         EntityTransaction transaction = entityManager.getTransaction();

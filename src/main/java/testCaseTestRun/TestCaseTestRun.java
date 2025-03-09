@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class TestCaseTestRun implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int testCaseTestRunId;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

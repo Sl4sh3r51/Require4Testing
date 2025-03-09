@@ -6,6 +6,7 @@ import jakarta.faces.event.ComponentSystemEvent;
 import jakarta.faces.validator.ValidatorException;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import user.User;
@@ -24,9 +25,9 @@ public class LoginBean implements Serializable {
 
     Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
-    String username;
+    String username = "";
 
-    String password;
+    String password = "";
 
     String errorMessage;
 
@@ -67,8 +68,13 @@ public class LoginBean implements Serializable {
     }
 
     public String logout() {
-        this.username = null;
-        this.password = null;
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        if(session != null) {
+            session.invalidate();
+        }
+        this.username = "";
+        this.password = "";
         return "login.xhtml?faces-redirect=true";
     }
 
@@ -103,6 +109,7 @@ public class LoginBean implements Serializable {
             }
         }
         this.errorMessage = "Passwort und Benutzername nicht erkannt.";
+        this.password = "";
         return "login.xhtml?faces-redirect=true";
     }
 }

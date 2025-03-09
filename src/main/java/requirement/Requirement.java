@@ -1,25 +1,27 @@
 package requirement;
 
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import testCase.TestCase;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 public class Requirement implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int requirementId;
 
     @Column
+    @NotNull
     private String title;
 
-    @Column
+    @Column(length = 512)
+    @NotNull
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -27,15 +29,19 @@ public class Requirement implements Serializable {
     private RequirementStatus requirementStatus;
 
     @Column
+    @NotNull
     private double version;
 
     @Column
-    private Date creationDate;
+    @NotNull
+    private LocalDate creationDate;
 
     @Column
-    private Date modificationDate;
+    @NotNull
+    private LocalDate modificationDate;
 
     @Column
+    @NotNull
     private int priority;
 
     @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -44,7 +50,7 @@ public class Requirement implements Serializable {
     public Requirement() {
     }
 
-    public Requirement(int requirementId, String title, String description, RequirementStatus requirementStatus, double version, Date creationDate, Date modificationDate, int priority, List<TestCase> testCases) {
+    public Requirement(int requirementId, String title, String description, RequirementStatus requirementStatus, double version, LocalDate creationDate, LocalDate modificationDate, int priority, List<TestCase> testCases) {
         this.requirementId = requirementId;
         this.title = title;
         this.description = description;
@@ -66,10 +72,6 @@ public class Requirement implements Serializable {
 
     public int getRequirementId() {
         return requirementId;
-    }
-
-    public void setRequirementId(int requirementId) {
-        this.requirementId = requirementId;
     }
 
     public String getTitle() {
@@ -104,19 +106,19 @@ public class Requirement implements Serializable {
         this.version = version;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getModificationDate() {
+    public LocalDate getModificationDate() {
         return modificationDate;
     }
 
-    public void setModificationDate(Date modificationDate) {
+    public void setModificationDate(LocalDate modificationDate) {
         this.modificationDate = modificationDate;
     }
 

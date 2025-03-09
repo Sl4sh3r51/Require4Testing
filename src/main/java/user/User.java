@@ -1,6 +1,5 @@
 package user;
 
-
 import jakarta.persistence.*;
 import testRun.TestRun;
 
@@ -10,7 +9,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
     @Column
@@ -29,7 +28,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int userId, String username,String password, UserRoles userRole, TestRun testRun) {
+    public User(int userId, String username, String password, UserRoles userRole, TestRun testRun) {
         this.userId = userId;
         this.username = username;
         this.password = password;

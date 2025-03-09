@@ -32,6 +32,18 @@ body {
   margin-bottom: 15px;
 }
 
+.logout-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.title-container{
+  position: absolute;
+  top: 20px;
+  right: 800px;
+}
+
 .error {
   color: darkred;
   font-weight: bolder;
