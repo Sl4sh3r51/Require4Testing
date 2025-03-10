@@ -2,6 +2,8 @@ package user;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,13 @@ public class UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    Logger logger = LoggerFactory.getLogger(UserDAO.class);
+
     public UserDAO() {
         try {
             entityManager = Persistence.createEntityManagerFactory("require4Testing").createEntityManager();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -90,6 +94,9 @@ public class UserDAO {
             transaction.begin();
             if (user != null) {
                 entityManager.remove(user);
+            }
+            else {
+                logger.error("Es wurde kein User gefunden, der gelöscht werden kann!");
             }
             transaction.commit();
         } catch (Exception exception) {

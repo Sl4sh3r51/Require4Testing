@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import user.User;
 
 import java.util.List;
 
@@ -59,5 +60,18 @@ public class TestCaseTestRunService {
         else {
             logger.trace("Es gibt kein Objekt mit der Id: " + id + " was gelöscht werden kann!");
         }
+    }
+
+    public void updateTestCaseTestRun(TestCaseTestRun testCaseTestRun) {
+        if(testCaseTestRun != null) {
+            testCaseTestRunDAO.update(testCaseTestRun);
+        }
+        else {
+            logger.error("Es gibt kein Objekt, was aktualisiert werden kann!");
+        }
+    }
+
+    public List<TestCaseTestRun> getTestCaseTestRunsForTester(User tester) {
+        return testCaseTestRunDAO.findByTester(tester);
     }
 }

@@ -1,8 +1,10 @@
 package testCaseTestRun;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import user.LoggedInUser;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,9 +16,17 @@ public class TestCaseTestRunController implements Serializable {
     @Inject
     TestCaseTestRunService testCaseTestRunService;
 
-    List<TestCaseTestRun> testCaseTestRuns;
+    @Inject
+    LoggedInUser loggedUser;
+
+    List<TestCaseTestRun> assignedTestCasesTestRuns;
 
     TestCaseTestRun testCaseTestRun;
+
+    @PostConstruct
+    public void init() {
+        assignedTestCasesTestRuns = testCaseTestRunService.getTestCaseTestRunsForTester(loggedUser.getLoggedUser());
+    }
 
     public TestCaseTestRunController() {}
 
@@ -24,15 +34,19 @@ public class TestCaseTestRunController implements Serializable {
         this.testCaseTestRunService = testCaseTestRunService;
     }
 
-    public List<TestCaseTestRun> getTestCaseTestRuns() {
-        return testCaseTestRuns = testCaseTestRunService.getAllTestCaseTestRuns();
+    public List<TestCaseTestRun> getAssignedTestCasesTestRuns() {
+        return assignedTestCasesTestRuns = testCaseTestRunService.getTestCaseTestRunsForTester(loggedUser.getLoggedUser());
+    }
+
+    public void saveResult(TestCaseTestRun testCaseTestRun) {
+        testCaseTestRunService.updateTestCaseTestRun(testCaseTestRun);
     }
 
     public TestCaseTestRun getTestCaseTestRunById(int testCaseTestRunId) {
         if(!testCaseTestRunService.getAllTestCaseTestRuns().isEmpty()){
             return testCaseTestRun = testCaseTestRunService.getTestCaseTestRunById(testCaseTestRunId);
         }
-        else return testCaseTestRuns.get(0);
+        else return assignedTestCasesTestRuns.get(0);
     }
 
     public void createTestCaseTestRun(TestCaseTestRun newTestCaseTestRun) {
@@ -46,9 +60,9 @@ public class TestCaseTestRunController implements Serializable {
 
     public List<TestCaseTestRun> getTestCaseTestRunsByResultStatus(boolean status) {
         if(!testCaseTestRunService.getAllTestCaseTestRuns().isEmpty()){
-            return testCaseTestRuns = testCaseTestRunService.getTestCaseTestRunsByResultStatus(status);
+            return assignedTestCasesTestRuns = testCaseTestRunService.getTestCaseTestRunsByResultStatus(status);
         }
-        else return testCaseTestRuns;
+        else return assignedTestCasesTestRuns;
     }
 
     public void removeTestCaseTestRun(int testCaseTestRunId) {

@@ -2,6 +2,8 @@ package testCase;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,13 @@ public class TestCaseDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    Logger logger = LoggerFactory.getLogger(TestCaseDAO.class);
+
     public TestCaseDAO(){
         try{
             entityManager = Persistence.createEntityManagerFactory("require4Testing").createEntityManager();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -66,6 +70,9 @@ public class TestCaseDAO {
             transaction.begin();
             if(testCase != null) {
                 entityManager.remove(testCase);
+            }
+            else {
+                logger.error("Es wurde kein TestCase gefunden, der gelöscht werden kann!");
             }
             transaction.commit();
         } catch (Exception exception) {

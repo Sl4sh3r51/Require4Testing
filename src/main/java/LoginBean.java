@@ -9,6 +9,7 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import user.LoggedInUser;
 import user.User;
 import user.UserRoles;
 import user.UserService;
@@ -22,6 +23,9 @@ public class LoginBean implements Serializable {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private LoggedInUser loggedInUser;
 
     Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
@@ -75,6 +79,8 @@ public class LoginBean implements Serializable {
         }
         this.username = "";
         this.password = "";
+        this.errorMessage = "";
+        loggedInUser.setLoggedUser(null);
         return "login.xhtml?faces-redirect=true";
     }
 
@@ -96,15 +102,19 @@ public class LoginBean implements Serializable {
         if(validLogin){
             if(user.getUserRole().equals(UserRoles.REQUIREMENT_ENGINEER)){
                 this.errorMessage = "";
+                loggedInUser.setLoggedUser(user);
                 return "requirementsEngineer.xhtml?faces-redirect=true";
             } else if (user.getUserRole().equals(UserRoles.TESTER)) {
                 this.errorMessage = "";
+                loggedInUser.setLoggedUser(user);
                 return "tester.xhtml?faces-redirect=true";
             } else if (user.getUserRole().equals(UserRoles.TESTMANAGER)) {
                 this.errorMessage = "";
+                loggedInUser.setLoggedUser(user);
                 return "testmanager.xhtml?faces-redirect=true";
             } else if (user.getUserRole().equals(UserRoles.TEST_CREATOR)) {
                 this.errorMessage = "";
+                loggedInUser.setLoggedUser(user);
                 return "testCreator.xhtml?faces-redirect=true";
             }
         }

@@ -25,6 +25,13 @@ public class RequirementController implements Serializable {
 
     Requirement requirement = new Requirement();
 
+    public RequirementController() {
+    }
+
+    public RequirementController(RequirementService requirementService) {
+        this.requirementService = requirementService;
+    }
+
     @PostConstruct
     public void init() {
         requirements = requirementService.getAllRequirements();
@@ -63,19 +70,6 @@ public class RequirementController implements Serializable {
         this.filteredRequirements = filteredRequirements;
     }
 
-    public RequirementController() {
-    }
-
-    public RequirementController(RequirementService requirementService) {
-        this.requirementService = requirementService;
-    }
-
-    public Requirement getRequirementById(int id) {
-        if (!requirementService.getAllRequirements().isEmpty()) {
-            return requirement = requirementService.getRequirementById(id);
-        } else return requirements.get(0);
-    }
-
     public String createRequirement() {
         requirement.setCreationDate(LocalDate.now());
         requirement.setModificationDate(LocalDate.now());
@@ -83,37 +77,8 @@ public class RequirementController implements Serializable {
         requirementService.saveRequirement(requirement);
         requirement = new Requirement();
         requirements = requirementService.getAllRequirements();
+        filteredRequirements = new ArrayList<>(requirements);
         return "requirementsEngineer.xhtml?faces-redirect=true";
-    }
-
-    public List<Requirement> sortRequirementsByRequirementStatus(RequirementStatus requirementStatus) {
-        if (!requirementService.getAllRequirements().isEmpty()) {
-            return requirements = requirementService.getRequirementsByStatus(requirementStatus);
-        } else return requirements;
-    }
-
-    public List<Requirement> sortRequirementsByVersion(boolean ascending) {
-        if (!requirementService.getAllRequirements().isEmpty()) {
-            return requirements = requirementService.sortByVersion(ascending);
-        } else return requirements;
-    }
-
-    public List<Requirement> sortRequirementsByCreationDate(boolean ascending) {
-        if (!requirementService.getAllRequirements().isEmpty()) {
-            return requirements = requirementService.sortByCreationDate(ascending);
-        } else return requirements;
-    }
-
-    public List<Requirement> sortRequirementsByPriority(boolean ascending) {
-        if (!requirementService.getAllRequirements().isEmpty()) {
-            return requirements = requirementService.sortByPriority(ascending);
-        } else return requirements;
-    }
-
-    public List<Requirement> sortRequirementsByModificationDate(boolean ascending) {
-        if (!requirementService.getAllRequirements().isEmpty()) {
-            return requirements = requirementService.sortByModificationDate(ascending);
-        } else return requirements;
     }
 
     public void removeRequirement(ActionEvent event) {

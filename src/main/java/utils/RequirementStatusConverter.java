@@ -7,13 +7,13 @@ import jakarta.faces.convert.FacesConverter;
 import requirement.RequirementStatus;
 
 @FacesConverter(value = "requirementConverter")
-public class RequirementStatusConverter implements Converter {
+public class RequirementStatusConverter implements Converter<RequirementStatus> {
 
 
     @Override
-    public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value instanceof RequirementStatus) {
-            return value.toString();
+    public String getAsString(FacesContext context, UIComponent component, RequirementStatus requirementStatus) {
+        if(requirementStatus != null) {
+            return requirementStatus.toString();
         }
         else {
             return "";
@@ -21,7 +21,7 @@ public class RequirementStatusConverter implements Converter {
     }
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+    public RequirementStatus getAsObject(FacesContext context, UIComponent component, String value) {
         return RequirementStatus.valueOf(value);
     }
 }

@@ -2,6 +2,8 @@ package testRun;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import user.User;
 
 import java.util.ArrayList;
@@ -13,11 +15,13 @@ public class TestRunDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    Logger logger = LoggerFactory.getLogger(TestRunDAO.class);
+
     public TestRunDAO(){
         try {
             entityManager = Persistence.createEntityManagerFactory("require4Testing").createEntityManager();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -130,6 +134,9 @@ public class TestRunDAO {
             transaction.begin();
             if(testRun != null) {
                 entityManager.remove(testRun);
+            }
+            else{
+                logger.error("Es wurde kein Testlauf gefunden, der gelöscht werden kann!");
             }
             transaction.commit();
         } catch (Exception exception) {
