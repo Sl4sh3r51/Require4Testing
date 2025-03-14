@@ -1,6 +1,7 @@
 html, body{
   height: 100%;
   margin: 0;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,28 +9,28 @@ html, body{
   background-color: #f0f0f0;
 }
 
-body {
-  font-family: Arial;
-}
-
 .container {
-  width: 100%;
-  max-width: 400px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .form-group{
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 10px;
   align-items: center;
   margin-bottom: 15px;
+}
+
+.form-label{
+  text-align: right;
+  padding-right: 10px;
 }
 
 .logout-container {
@@ -39,9 +40,10 @@ body {
 }
 
 .title-container{
-  position: absolute;
-  top: 20px;
-  right: 800px;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
 }
 
 .error {
@@ -51,5 +53,22 @@ body {
 
 p#fussnote {
   font-size: 0.7em;
+}
+
+@media (max-width: 770px) {
+  .container{
+    width: 100%;
+    padding: 5px;
+  }
+
+  .title-container{
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+
+  .logout-container{
+    top: 10px;
+    right: 10px;
+  }
 }
 

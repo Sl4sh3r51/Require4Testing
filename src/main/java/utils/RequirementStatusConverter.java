@@ -6,7 +6,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
 import requirement.RequirementStatus;
 
-@FacesConverter(value = "requirementConverter")
+@FacesConverter(value = "requirementStatusConverter")
 public class RequirementStatusConverter implements Converter<RequirementStatus> {
 
 

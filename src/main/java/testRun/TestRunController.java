@@ -3,9 +3,13 @@ package testRun;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import testCase.TestCase;
 import user.User;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("testRunController")
@@ -15,9 +19,15 @@ public class TestRunController implements Serializable {
     @Inject
     TestRunService testRunService;
 
-    List<TestRun> testRuns;
+    List<TestRun> testRuns = new ArrayList<>();
 
-    TestRun testRun;
+    List<TestCase> selectedTestCases = new ArrayList<>();
+
+    TestRun testRun = new TestRun();
+
+    int hours;
+
+    int minutes;
 
     public TestRunController() {}
 
@@ -27,6 +37,38 @@ public class TestRunController implements Serializable {
 
     public List<TestRun> getAllTestRuns() {
         return testRuns = testRunService.getAllTestRuns();
+    }
+
+    public TestRun getTestRun() {
+        return testRun;
+    }
+
+    public void setTestRun(TestRun testRun) {
+        this.testRun = testRun;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public List<TestCase> getSelectedTestCases() {
+        return selectedTestCases;
+    }
+
+    public void setSelectedTestCases(List<TestCase> selectedTestCases) {
+        this.selectedTestCases = selectedTestCases;
     }
 
     public TestRun getTestRunById(int id) {
@@ -64,13 +106,10 @@ public class TestRunController implements Serializable {
         else return testRuns;
     }
 
-    public void createTestRun(TestRun newTestRun) {
-        testRun = new TestRun();
-        testRun.setTestRunId(newTestRun.getTestRunId());
-        testRun.setRunNumber(newTestRun.getRunNumber());
-        testRun.setExecutionTime(newTestRun.getExecutionTime());
-        testRun.setExecutionDate(newTestRun.getExecutionDate());
-        testRun.setTester(newTestRun.getTester());
+    public void createTestRun() {
+        testRun.setExecutionDate(LocalDate.now());
+        testRun.setExecutionTime(Duration.ZERO);
+
         testRunService.saveTestRun(testRun);
     }
 

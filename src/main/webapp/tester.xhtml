@@ -10,7 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </h:head>
 <h:form>
-    <h3>Zugewiesene Testfälle</h3>
+    <h:panelGroup layout="block" styleClass="logout-container">
+        <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
+                         immediate="true" ajax="false" title="Logout"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="title-container">
+        <h2>Zugewiesene Testfälle</h2>
+    </h:panelGroup>
+
     <p:dataTable id="testCaseTestRunTable" value="#{testCaseTestRunController.assignedTestCasesTestRuns}"
                  var="testCaseTestRun">
         <p:column headerText="Testfall">
@@ -28,5 +36,4 @@
         </p:column>
     </p:dataTable>
 </h:form>
-
 </html>

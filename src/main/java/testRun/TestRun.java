@@ -5,7 +5,7 @@ import user.User;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class TestRun implements Serializable {
@@ -21,7 +21,7 @@ public class TestRun implements Serializable {
     private Duration executionTime;
 
     @Column
-    private Date executionDate;
+    private LocalDate executionDate;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
@@ -30,7 +30,7 @@ public class TestRun implements Serializable {
     public TestRun() {
     }
 
-    public TestRun(int testRunId, int runNumber, Duration executionTime, Date executionDate, User tester) {
+    public TestRun(int testRunId, int runNumber, Duration executionTime, LocalDate executionDate, User tester) {
         this.testRunId = testRunId;
         this.runNumber = runNumber;
         this.executionTime = executionTime;
@@ -62,11 +62,11 @@ public class TestRun implements Serializable {
         this.executionTime = executionTime;
     }
 
-    public Date getExecutionDate() {
+    public LocalDate getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(Date executionDate) {
+    public void setExecutionDate(LocalDate executionDate) {
         this.executionDate = executionDate;
     }
 

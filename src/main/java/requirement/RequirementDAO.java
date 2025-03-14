@@ -61,6 +61,25 @@ public class RequirementDAO {
         }
     }
 
+    public void update(Requirement requirement) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            if(requirement != null) {
+                entityManager.merge(requirement);
+                transaction.commit();
+            }
+            else {
+                logger.error("Es wurde kein Requirement gefunden, was aktualisiert werden kann!");
+            }
+        } catch (Exception exception) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw exception;
+        }
+    }
+
     public void delete(Requirement requirement) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {

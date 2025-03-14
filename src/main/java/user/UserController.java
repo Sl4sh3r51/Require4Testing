@@ -14,7 +14,7 @@ public class UserController implements Serializable {
     @Inject
     UserService userService;
 
-    List<User> users;
+    List<User> testers;
 
     User user;
 
@@ -24,22 +24,22 @@ public class UserController implements Serializable {
         this.userService = userService;
     }
 
-    public List<User> getAllUsers() {
-        return users = userService.getAllUsers();
+    public List<User> getAllTesters() {
+        return testers = userService.getUsersByRole(UserRoles.TESTER);
     }
 
     public User getUserById(int id) {
         if(!userService.getAllUsers().isEmpty()){
             return user = userService.getUserById(id);
         }
-        else return users.get(0);
+        else return testers.get(0);
     }
 
     public List<User> getUsersByRole(UserRoles role) {
         if(!userService.getAllUsers().isEmpty()){
-            return users = userService.getUsersByRole(role);
+            return testers = userService.getUsersByRole(role);
         }
-        else return users;
+        else return testers;
     }
 
     public void createUser(User newUser) {
@@ -48,7 +48,6 @@ public class UserController implements Serializable {
         user.setUsername(newUser.getUsername());
         user.setPassword(newUser.getPassword());
         user.setUserRole(newUser.getUserRole());
-        user.setTestRun(newUser.getTestRun());
         userService.saveUser(user);
     }
 

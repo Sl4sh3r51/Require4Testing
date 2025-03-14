@@ -1,27 +1,49 @@
 package testCase;
 
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import requirement.Requirement;
+import requirement.RequirementService;
+import requirement.RequirementStatus;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("testCaseController")
-@SessionScoped
+@ViewScoped
 public class TestCaseController implements Serializable {
 
     @Inject
     TestCaseService testCaseService;
 
-    TestCase testCase;
+    @Inject
+    RequirementService requirementService;
 
-    List<TestCase> testCaseList;
+    TestCase testCase = new TestCase();
+
+    List<TestCase> testCaseList = new ArrayList<>();
+
+    @PostConstruct
+    public void init() {
+        testCaseList = testCaseService.getAllTestCases();
+    }
 
     public TestCaseController() {}
 
     public TestCaseController(TestCaseService testCaseService) {
         this.testCaseService = testCaseService;
+    }
+
+    public TestCase getTestCase() {
+        return testCase;
+    }
+
+    public void setTestCase(TestCase testCase) {
+        this.testCase = testCase;
     }
 
     public List<TestCase> getAllTestCases() {
@@ -35,12 +57,23 @@ public class TestCaseController implements Serializable {
         else return testCaseList.get(0);
     }
 
-    public void createTestCase(TestCase newTestCase) {
+    public String createTestCase() {
+        if(testCase.getRequirement() != null){
+            List<TestCase> testCasesForRequirement = new ArrayList<>();
+            testCasesForRequirement.add(testCase);
+            Requirement requirement = testCase.getRequirement();
+            requirement.getTestCases().addAll(testCasesForRequirement);
+            requirement.setRequirementStatus(RequirementStatus.WAITING_FOR_TESTCASE);
+            requirement.setModificationDate(LocalDate.now());
+            requirementService.updateRequirement(requirement);
+        }
+        else{
+            testCaseService.saveTestCase(testCase);
+        }
+
         testCase = new TestCase();
-        testCase.setTestCaseId(newTestCase.getTestCaseId());
-        testCase.setDescription(newTestCase.getDescription());
-        testCase.setRequirement(newTestCase.getRequirement());
-        testCaseService.saveTestCase(testCase);
+        testCaseList = testCaseService.getAllTestCases();
+        return "testCreator.xhtml?faces-redirect=true";
     }
 
     public void removeTestCase(int id) {

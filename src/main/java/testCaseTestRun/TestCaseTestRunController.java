@@ -4,9 +4,12 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import testCase.TestCase;
+import testRun.TestRun;
 import user.LoggedInUser;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("testCaseTestRunController")
@@ -19,9 +22,13 @@ public class TestCaseTestRunController implements Serializable {
     @Inject
     LoggedInUser loggedUser;
 
-    List<TestCaseTestRun> assignedTestCasesTestRuns;
+    List<TestCaseTestRun> assignedTestCasesTestRuns = new ArrayList<>();
 
-    TestCaseTestRun testCaseTestRun;
+    TestCaseTestRun testCaseTestRun = new TestCaseTestRun();
+
+    TestCase testCase = new TestCase();
+
+    TestRun testRun = new TestRun();
 
     @PostConstruct
     public void init() {
@@ -49,13 +56,13 @@ public class TestCaseTestRunController implements Serializable {
         else return assignedTestCasesTestRuns.get(0);
     }
 
-    public void createTestCaseTestRun(TestCaseTestRun newTestCaseTestRun) {
-        testCaseTestRun = new TestCaseTestRun();
-        testCaseTestRun.setTestCaseTestRunId(newTestCaseTestRun.getTestCaseTestRunId());
-        testCaseTestRun.setTestCase(newTestCaseTestRun.getTestCase());
-        testCaseTestRun.setTestRun(newTestCaseTestRun.getTestRun());
-        testCaseTestRun.setPassed(newTestCaseTestRun.getPassed());
+    public void createTestCaseTestRun() {
+        testCaseTestRun.setTestCase(this.testCase);
+        testCaseTestRun.setTestRun(this.testRun);
         testCaseTestRunService.saveTestCaseTestRun(testCaseTestRun);
+
+
+        testCaseTestRun = new TestCaseTestRun();
     }
 
     public List<TestCaseTestRun> getTestCaseTestRunsByResultStatus(boolean status) {

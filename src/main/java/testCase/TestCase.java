@@ -15,8 +15,8 @@ public class TestCase implements Serializable {
     @Column
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "requirement", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requirement_id", nullable = false)
     private Requirement requirement;
 
     public TestCase() {

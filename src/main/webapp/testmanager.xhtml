@@ -3,10 +3,48 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-   <f:view>
-      <h:outputLabel value="Hello, world"/>
-   </f:view>
+<h:head>
+   <title>Require4Testing - Testmanager</title>
+   <link rel="stylesheet" type="text/css" href="style.css"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</h:head>
+
+<h:form>
+   <h:panelGroup layout="block" styleClass="logout-container">
+      <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
+                       immediate="true" ajax="false" title="Logout"/>
+   </h:panelGroup>
+
+   <h:panelGroup layout="block" styleClass="title-container">
+      <h2>Testlauf erstellen</h2>
+   </h:panelGroup>
+   <h:panelGrid columns="2">
+      <h:outputLabel value="Run-Nummer:" />
+      <p:inputText value="#{testRunController.testRun.runNumber}" required="true" />
+
+      <h:outputLabel value="Tester zuweisen:" />
+      <p:selectOneMenu value="#{testRunController.testRun.tester}">
+         <f:selectItems value="#{userController.allTesters}" var="user" itemLabel="#{user.username}" itemValue="#{user}" />
+      </p:selectOneMenu>
+   </h:panelGrid>
+
+   <p:commandButton value="Testlauf erstellen" action="#{testRunController.createTestRun}" update="@form" />
+</h:form>
+
+<h:form>
+   <h3>Testfälle zu Testlauf zuweisen</h3>
+   <p:dataTable id="testCaseTestRunTable" value="#{testCaseController.allTestCases}" var="testCase" selectionMode="multiple"
+                selection="#{testRunController.selectedTestCases}" rowKey="#{testCaseController.testCase.testCaseId}">
+      <p:column headerText="ID">
+         <h:outputText value="#{testCase.testCaseId}" />
+      </p:column>
+      <p:column headerText="Beschreibung">
+         <h:outputText value="#{testCase.description}" />
+      </p:column>
+   </p:dataTable>
+
+   <p:commandButton value="Testfälle zu Testlauf hinzufügen" action="#{testCaseTestRunController.createTestCaseTestRun}" update="@form" />
+</h:form>
 </html>

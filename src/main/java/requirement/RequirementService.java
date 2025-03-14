@@ -24,7 +24,7 @@ public class RequirementService {
         if(requirement != null){
             requirementDAO.save(requirement);
         }
-        else logger.error("Das Objekt: " + requirement + " darf nicht leer sein!");
+        else logger.error("Das Objekt darf nicht leer sein!");
     }
 
     public List<Requirement> getAllRequirements() {
@@ -33,6 +33,13 @@ public class RequirementService {
             logger.error("Es wurden keine Anforderungen gefunden!");
         }
         return requirements;
+    }
+
+    public void updateRequirement(Requirement requirement) {
+        if(requirement != null){
+            requirementDAO.update(requirement);
+        }
+        else logger.error("Es gibt kein Requirement, was aktualisiert werden kann!");
     }
 
     public void deleteRequirementById(int id) {

@@ -19,7 +19,7 @@ public class TestCaseService {
     public TestCaseService() {}
 
     public void saveTestCase(TestCase testCase) {
-        if(testCase != null){
+        if(testCase != null && testCase.getRequirement() != null){
             testCaseDAO.save(testCase);
         }
         else {

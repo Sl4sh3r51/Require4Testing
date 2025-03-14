@@ -10,19 +10,19 @@
 </h:head>
 <h:body>
     <div class="container">
-        <img src="require4testing-logo.png" width="350" height="350" alt="Logo"/>
+        <img src="require4testing-logo.png" width="325" height="400" alt="Logo"/>
         <h1>Require4Testing: Login</h1>
         <h:form>
             <div class="form-group">
-                <h:outputLabel value="Benutzername:" for="user"/>
-                <p:inputText id="user" value="#{loginBean.username}" size="40" required="true">
+                <h:outputLabel value="Benutzername:" for="user" styleClass="form-label"/>
+                <p:inputText id="user" value="#{loginBean.username}" required="true">
                     <f:event type="postValidate" listener="#{loginBean.ValidateUser}"/>
                 </p:inputText>
                 <h:message for="user" styleClass="error"/>
             </div>
 
             <div class="form-group">
-                <h:outputLabel value="Passwort: " for="password"/>
+                <h:outputLabel value="Passwort: " for="password" styleClass="form-label"/>
                 <p:password id="password" value="#{loginBean.password}" required="true" toggleMask="true" redisplay="true" validator="#{loginBean.validatePassword}"/>
                 <h:message for="password" styleClass="error"/>
             </div>

@@ -1,7 +1,6 @@
 package user;
 
 import jakarta.persistence.*;
-import testRun.TestRun;
 
 import java.io.Serializable;
 
@@ -21,19 +20,14 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRoles userRole;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    private TestRun testRun;
-
     public User() {
     }
 
-    public User(int userId, String username, String password, UserRoles userRole, TestRun testRun) {
+    public User(int userId, String username, String password, UserRoles userRole) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.userRole = userRole;
-        this.testRun = testRun;
     }
 
     public int getUserId() {
@@ -58,14 +52,6 @@ public class User implements Serializable {
 
     public void setUserRole(UserRoles userRole) {
         this.userRole = userRole;
-    }
-
-    public TestRun getTestRun() {
-        return testRun;
-    }
-
-    public void setTestRun(TestRun testRun) {
-        this.testRun = testRun;
     }
 
     public String getPassword() {
