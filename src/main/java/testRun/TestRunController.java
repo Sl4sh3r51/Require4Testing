@@ -3,7 +3,6 @@ package testRun;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import testCase.TestCase;
 import user.User;
 
 import java.io.Serializable;
@@ -21,13 +20,7 @@ public class TestRunController implements Serializable {
 
     List<TestRun> testRuns = new ArrayList<>();
 
-    List<TestCase> selectedTestCases = new ArrayList<>();
-
     TestRun testRun = new TestRun();
-
-    int hours;
-
-    int minutes;
 
     public TestRunController() {}
 
@@ -45,30 +38,6 @@ public class TestRunController implements Serializable {
 
     public void setTestRun(TestRun testRun) {
         this.testRun = testRun;
-    }
-
-    public int getHours() {
-        return hours;
-    }
-
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-    public int getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
-    public List<TestCase> getSelectedTestCases() {
-        return selectedTestCases;
-    }
-
-    public void setSelectedTestCases(List<TestCase> selectedTestCases) {
-        this.selectedTestCases = selectedTestCases;
     }
 
     public TestRun getTestRunById(int id) {

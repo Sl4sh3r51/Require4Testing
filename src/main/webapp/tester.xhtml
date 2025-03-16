@@ -19,21 +19,46 @@
         <h2>Zugewiesene Testfälle</h2>
     </h:panelGroup>
 
-    <p:dataTable id="testCaseTestRunTable" value="#{testCaseTestRunController.assignedTestCasesTestRuns}"
-                 var="testCaseTestRun">
-        <p:column headerText="Testfall">
-            <h:outputText value="#{testCaseTestRun.testCase.description}"/>
-        </p:column>
-        <p:column headerText="Ergebnis">
-            <p:selectOneMenu value="#{testCaseTestRun.passed}">
-                <f:selectItem itemLabel="Passed" itemValue="true"/>
-                <f:selectItem itemLabel="Failed" itemValue="false"/>
-            </p:selectOneMenu>
-        </p:column>
-        <p:column headerText="Testfall speichern">
-            <p:commandButton value="Ergebnisse speichern"
-                             action="#{testCaseTestRunController.saveResult(testCaseTestRun)}" update="@form"/>
-        </p:column>
-    </p:dataTable>
+    <div class="styled-table-container">
+        <p:dataTable id="testCaseTestRunTable" value="#{testCaseTestRunController.assignedTestCasesTestRuns}"
+                     var="testCaseTestRun" styleClass="styled-table">
+            <p:column headerText="Testfall">
+                <h:outputText value="#{testCaseTestRun.testCase.description}"/>
+            </p:column>
+            <p:column headerText="Ergebnis">
+                <p:selectOneMenu value="#{testCaseTestRun.passed}">
+                    <f:selectItem itemLabel="Passed" itemValue="true"/>
+                    <f:selectItem itemLabel="Failed" itemValue="false"/>
+                </p:selectOneMenu>
+            </p:column>
+            <p:column headerText="Dauer">
+                <div class="duration-container">
+                    <div class="duration-input">
+                        <h:outputLabel for="hours" value="Stunden:"
+                                       style="font-size: 12px;font-weight: bold;margin-bottom: 3px;"/>
+                        <p:inputNumber label="Stunden" minValue="0" maxValue="23" id="hours"
+                                       value="#{testCaseTestRunController.tempHours[testCaseTestRun.testCase.testCaseId]}"/>
+                    </div>
+                    <div class="duration-input">
+                        <h:outputLabel for="minutes" value="Minuten:"
+                                       style="font-size: 12px;font-weight: bold;margin-bottom: 3px;"/>
+                        <p:inputNumber label="Minuten" minValue="0" maxValue="59" id="minutes"
+                                       value="#{testCaseTestRunController.tempMinutes[testCaseTestRun.testCase.testCaseId]}"/>
+                    </div>
+                    <div class="duration-input">
+                        <h:outputLabel for="seconds" value="Sekunden:"
+                                       style="font-size: 12px;font-weight: bold;margin-bottom: 3px;"/>
+                        <p:inputNumber label="Sekunden" minValue="0" maxValue="59" id="seconds"
+                                       value="#{testCaseTestRunController.tempSeconds[testCaseTestRun.testCase.testCaseId]}"/>
+                    </div>
+                </div>
+            </p:column>
+            <p:column headerText="Testfall speichern">
+                <p:commandButton value="Ergebnisse speichern"
+                                 action="#{testCaseTestRunController.saveResult(testCaseTestRun)}" update="@form"
+                                 styleClass="save-button"/>
+            </p:column>
+        </p:dataTable>
+    </div>
 </h:form>
 </html>

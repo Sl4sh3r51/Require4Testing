@@ -6,45 +6,50 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-   <title>Require4Testing - TestCreator</title>
-   <link rel="stylesheet" type="text/css" href="style.css"/>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Require4Testing - TestCreator</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </h:head>
 
 <h:form>
-   <h:panelGroup layout="block" styleClass="logout-container">
-      <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
-                       immediate="true" ajax="false" title="Logout"/>
-   </h:panelGroup>
+    <h:panelGroup layout="block" styleClass="logout-container">
+        <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
+                         immediate="true" ajax="false" title="Logout"/>
+    </h:panelGroup>
 
-   <h:panelGroup layout="block" styleClass="title-container">
-      <h2>Neuen Testfall erstellen</h2>
-   </h:panelGroup>
+    <h:panelGroup layout="block" styleClass="title-container">
+        <h2>Neuen Testfall erstellen</h2>
+    </h:panelGroup>
 
-   <h:panelGrid columns="2" styleClass="form-group">
-      <h:outputLabel value="Beschreibung:" />
-      <p:inputTextarea value="#{testCaseController.testCase.description}" required="true" rows="3" autoResize="false" />
+    <h:panelGrid columns="2" styleClass="form-group">
+        <h:outputLabel value="Beschreibung:"/>
+        <p:inputTextarea value="#{testCaseController.testCase.description}" required="true" rows="3"
+                         autoResize="false"/>
 
-      <h:outputLabel value="Anforderung:" />
-      <p:selectOneMenu value="#{testCaseController.testCase.requirement}" converter="requirementConverter">
-         <f:selectItems value="#{requirementController.requirements}" var="req" itemLabel="#{req.title}" itemValue="#{req}" />
-      </p:selectOneMenu>
+        <h:outputLabel value="Anforderung:"/>
+        <p:selectOneMenu value="#{testCaseController.testCase.requirement}" converter="requirementConverter">
+            <f:selectItems value="#{requirementController.requirements}" var="req" itemLabel="#{req.title}"
+                           itemValue="#{req}"/>
+        </p:selectOneMenu>
 
-      <p:commandButton value="Testfall erstellen" action="#{testCaseController.createTestCase}" update="@form" process="@form"/>
-      <p:messages showDetail="true" closable="true"/>
-   </h:panelGrid>
+        <p:commandButton value="Testfall erstellen" action="#{testCaseController.createTestCase}" update="@form"
+                         process="@form"/>
+        <p:messages showDetail="true" closable="true"/>
+    </h:panelGrid>
 
-   <h2>Vorhandene Testfälle</h2>
-   <p:dataTable value="#{testCaseController.allTestCases}" var="testCase">
-      <p:column headerText="ID">
-         <h:outputText value="#{testCase.testCaseId}" />
-      </p:column>
-      <p:column headerText="Beschreibung">
-         <h:outputText value="#{testCase.description}" />
-      </p:column>
-      <p:column headerText="Anforderung">
-         <h:outputText value="#{testCase.requirement.title}" />
-      </p:column>
-   </p:dataTable>
+    <h2>Vorhandene Testfälle</h2>
+    <div class="styled-table-container">
+        <p:dataTable value="#{testCaseController.allTestCases}" var="testCase">
+            <p:column headerText="ID">
+                <h:outputText value="#{testCase.testCaseId}"/>
+            </p:column>
+            <p:column headerText="Beschreibung">
+                <h:outputText value="#{testCase.description}"/>
+            </p:column>
+            <p:column headerText="Anforderung">
+                <h:outputText value="#{testCase.requirement.title}"/>
+            </p:column>
+        </p:dataTable>
+    </div>
 </h:form>
 </html>

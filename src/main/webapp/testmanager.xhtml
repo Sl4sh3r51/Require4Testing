@@ -6,45 +6,57 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-   <title>Require4Testing - Testmanager</title>
-   <link rel="stylesheet" type="text/css" href="style.css"/>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Require4Testing - Testmanager</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </h:head>
 
 <h:form>
-   <h:panelGroup layout="block" styleClass="logout-container">
-      <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
-                       immediate="true" ajax="false" title="Logout"/>
-   </h:panelGroup>
+    <h:panelGroup layout="block" styleClass="logout-container">
+        <p:commandButton icon="pi pi-sign-out" styleClass="ui-button-icon-right" action="#{loginBean.logout}"
+                         immediate="true" ajax="false" title="Logout"/>
+    </h:panelGroup>
 
-   <h:panelGroup layout="block" styleClass="title-container">
-      <h2>Testlauf erstellen</h2>
-   </h:panelGroup>
-   <h:panelGrid columns="2">
-      <h:outputLabel value="Run-Nummer:" />
-      <p:inputText value="#{testRunController.testRun.runNumber}" required="true" />
+    <h:panelGroup layout="block" styleClass="title-container">
+        <h2>Testlauf erstellen</h2>
+    </h:panelGroup>
+    <h:panelGrid columns="2">
+        <h:outputLabel value="Run-Nummer:"/>
+        <p:inputText value="#{testRunController.testRun.runNumber}" required="true"/>
 
-      <h:outputLabel value="Tester zuweisen:" />
-      <p:selectOneMenu value="#{testRunController.testRun.tester}">
-         <f:selectItems value="#{userController.allTesters}" var="user" itemLabel="#{user.username}" itemValue="#{user}" />
-      </p:selectOneMenu>
-   </h:panelGrid>
+        <h:outputLabel value="Tester zuweisen:"/>
+        <p:selectOneMenu value="#{testRunController.testRun.tester}" converter="userConverter">
+            <f:selectItems value="#{userController.allTesters}" var="user" itemLabel="#{user.username}"
+                           itemValue="#{user}"/>
+        </p:selectOneMenu>
+    </h:panelGrid>
 
-   <p:commandButton value="Testlauf erstellen" action="#{testRunController.createTestRun}" update="@form" />
+    <p:commandButton value="Testlauf erstellen" action="#{testRunController.createTestRun}" update="@form"/>
+    <p:messages showDetail="true" closable="true"/>
 </h:form>
 
 <h:form>
-   <h3>Testfälle zu Testlauf zuweisen</h3>
-   <p:dataTable id="testCaseTestRunTable" value="#{testCaseController.allTestCases}" var="testCase" selectionMode="multiple"
-                selection="#{testRunController.selectedTestCases}" rowKey="#{testCaseController.testCase.testCaseId}">
-      <p:column headerText="ID">
-         <h:outputText value="#{testCase.testCaseId}" />
-      </p:column>
-      <p:column headerText="Beschreibung">
-         <h:outputText value="#{testCase.description}" />
-      </p:column>
-   </p:dataTable>
+    <h2>Testlauf auswählen</h2>
+    <p:selectOneMenu value="#{testRunController.testRun}" converter="testRunConverter">
+        <f:selectItems value="#{testRunController.allTestRuns}" var="testRun"
+                       itemLabel="Run-#{testRun.runNumber}" itemValue="#{testRun}"/>
+    </p:selectOneMenu>
 
-   <p:commandButton value="Testfälle zu Testlauf hinzufügen" action="#{testCaseTestRunController.createTestCaseTestRun}" update="@form" />
+    <h2>Testfälle zu Testlauf zuweisen</h2>
+    <div class="styled-table-container">
+        <p:dataTable id="testCaseTestRunTable" value="#{testCaseController.allTestCases}" var="testCase"
+                     selectionMode="multiple"
+                     selection="#{testCaseTestRunController.selectedTestCases}" rowKey="#{testCase.testCaseId}">
+            <p:column headerText="ID">
+                <h:outputText value="#{testCase.testCaseId}"/>
+            </p:column>
+            <p:column headerText="Beschreibung">
+                <h:outputText value="#{testCase.description}"/>
+            </p:column>
+        </p:dataTable>
+    </div>
+    <p:commandButton value="Testfälle zu Testlauf hinzufügen"
+                     action="#{testCaseTestRunController.createTestCaseTestRun}" update="@form"/>
+    <p:messages showDetail="true" closable="true"/>
 </h:form>
 </html>
