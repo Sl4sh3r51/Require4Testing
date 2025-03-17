@@ -25,12 +25,7 @@ public class RequirementController implements Serializable {
 
     Requirement requirement = new Requirement();
 
-    public RequirementController() {
-    }
-
-    public RequirementController(RequirementService requirementService) {
-        this.requirementService = requirementService;
-    }
+    public RequirementController() {}
 
     @PostConstruct
     public void init() {

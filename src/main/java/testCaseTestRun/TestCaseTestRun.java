@@ -27,13 +27,6 @@ public class TestCaseTestRun implements Serializable {
     public TestCaseTestRun() {
     }
 
-    public TestCaseTestRun(int testCaseTestRunId, TestCase testCase, TestRun testRun, boolean passed) {
-        this.testCaseTestRunId = testCaseTestRunId;
-        this.testCase = testCase;
-        this.testRun = testRun;
-        this.passed = passed;
-    }
-
     public int getTestCaseTestRunId() {
         return testCaseTestRunId;
     }

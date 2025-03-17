@@ -15,7 +15,6 @@ public class TestCaseService {
 
     Logger logger = LoggerFactory.getLogger(TestCaseService.class);
 
-
     public TestCaseService() {}
 
     public void saveTestCase(TestCase testCase) {
@@ -27,29 +26,11 @@ public class TestCaseService {
         }
     }
 
-    public TestCase getTestCaseById(int id) {
-        TestCase testCase = testCaseDAO.findById(id);
-        if(testCase == null){
-            logger.error("Es wurde kein Testfall mit der Id: " + id + " gefunden!");
-        }
-        return testCase;
-    }
-
     public List<TestCase> getAllTestCases() {
         List<TestCase> testCases = testCaseDAO.findAll();
         if(testCases == null || testCases.isEmpty()){
             logger.error("Es wurden keine Testfälle gefunden!");
         }
         return testCases;
-    }
-
-    public void deleteTestCaseById(int id) {
-        TestCase testCase = testCaseDAO.findById(id);
-        if(testCase != null){
-            testCaseDAO.delete(testCase);
-        }
-        else {
-            logger.trace("Es gibt kein Testfall mit der Id: " + id + " was gelöscht werden kann!");
-        }
     }
 }

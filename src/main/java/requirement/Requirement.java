@@ -47,20 +47,7 @@ public class Requirement implements Serializable {
     @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TestCase> testCases = new ArrayList<>();
 
-    public Requirement() {
-    }
-
-    public Requirement(int requirementId, String title, String description, RequirementStatus requirementStatus, double version, LocalDate creationDate, LocalDate modificationDate, int priority, List<TestCase> testCases) {
-        this.requirementId = requirementId;
-        this.title = title;
-        this.description = description;
-        this.requirementStatus = requirementStatus;
-        this.version = version;
-        this.creationDate = creationDate;
-        this.modificationDate = modificationDate;
-        this.priority = priority;
-        this.testCases = testCases;
-    }
+    public Requirement() {}
 
     public List<TestCase> getTestCases() {
         return testCases;

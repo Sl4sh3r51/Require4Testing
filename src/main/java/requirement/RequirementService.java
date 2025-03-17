@@ -15,10 +15,7 @@ public class RequirementService {
 
     Logger logger = LoggerFactory.getLogger(RequirementService.class);
 
-
-    public RequirementService() {
-
-    }
+    public RequirementService() {}
 
     public void saveRequirement(Requirement requirement) {
         if(requirement != null){

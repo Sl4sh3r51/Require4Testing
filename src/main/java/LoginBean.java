@@ -98,6 +98,11 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Check if login is valid from value validLogin
+     * Depending on UserRole redirect User to correct page
+     * Otherwise redirect to login page and show errorMessage
+     */
     public String login() {
         if(validLogin){
             if(user.getUserRole().equals(UserRoles.REQUIREMENT_ENGINEER)){

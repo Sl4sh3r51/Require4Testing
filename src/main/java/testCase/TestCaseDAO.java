@@ -25,7 +25,6 @@ public class TestCaseDAO {
         }
     }
 
-
     public void save(TestCase testCase) {
         EntityTransaction transaction = entityManager.getTransaction();
         try{
@@ -46,14 +45,6 @@ public class TestCaseDAO {
 
     }
 
-    public TestCase findById(int testCaseId) {
-        try{
-            return entityManager.find(TestCase.class, testCaseId);
-        } catch (Exception exception) {
-            return null;
-        }
-    }
-
     public List<TestCase> findAll() {
         try{
             TypedQuery<TestCase> query = entityManager.createQuery("SELECT a FROM TestCase a", TestCase.class);
@@ -63,23 +54,4 @@ public class TestCaseDAO {
         }
     }
 
-
-    public void delete(TestCase testCase) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        try{
-            transaction.begin();
-            if(testCase != null) {
-                entityManager.remove(testCase);
-            }
-            else {
-                logger.error("Es wurde kein TestCase gefunden, der gelöscht werden kann!");
-            }
-            transaction.commit();
-        } catch (Exception exception) {
-            if(transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            throw exception;
-        }
-    }
 }

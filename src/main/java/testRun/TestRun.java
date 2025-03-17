@@ -27,16 +27,7 @@ public class TestRun implements Serializable {
     @JoinColumn
     private User tester;
 
-    public TestRun() {
-    }
-
-    public TestRun(int testRunId, int runNumber, Duration executionTime, LocalDate executionDate, User tester) {
-        this.testRunId = testRunId;
-        this.runNumber = runNumber;
-        this.executionTime = executionTime;
-        this.executionDate = executionDate;
-        this.tester = tester;
-    }
+    public TestRun() {}
 
     public int getTestRunId() {
         return testRunId;

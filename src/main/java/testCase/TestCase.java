@@ -19,14 +19,7 @@ public class TestCase implements Serializable {
     @JoinColumn(name = "requirement_id", nullable = false)
     private Requirement requirement;
 
-    public TestCase() {
-    }
-
-    public TestCase(int testCaseId, String description, Requirement requirement) {
-        this.testCaseId = testCaseId;
-        this.description = description;
-        this.requirement = requirement;
-    }
+    public TestCase() {}
 
     public int getTestCaseId() {
         return testCaseId;

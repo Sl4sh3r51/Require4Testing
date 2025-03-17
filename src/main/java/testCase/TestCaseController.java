@@ -34,10 +34,6 @@ public class TestCaseController implements Serializable {
 
     public TestCaseController() {}
 
-    public TestCaseController(TestCaseService testCaseService) {
-        this.testCaseService = testCaseService;
-    }
-
     public TestCase getTestCase() {
         return testCase;
     }
@@ -48,13 +44,6 @@ public class TestCaseController implements Serializable {
 
     public List<TestCase> getAllTestCases() {
         return testCaseList = testCaseService.getAllTestCases();
-    }
-
-    public TestCase getTestCaseById(int id) {
-        if(!testCaseService.getAllTestCases().isEmpty()){
-            return testCase = testCaseService.getTestCaseById(id);
-        }
-        else return testCaseList.get(0);
     }
 
     public String createTestCase() {
@@ -76,9 +65,4 @@ public class TestCaseController implements Serializable {
         return "testCreator.xhtml?faces-redirect=true";
     }
 
-    public void removeTestCase(int id) {
-        if(!testCaseService.getAllTestCases().isEmpty()){
-            testCaseService.deleteTestCaseById(id);
-        }
-    }
 }

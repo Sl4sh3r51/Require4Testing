@@ -22,6 +22,13 @@ public class UserConverter implements Converter<User> {
         return String.valueOf(user.getUserId());
     }
 
+    /**
+     *
+     * @param context {@link FacesContext} for the request being processed
+     * @param component {@link UIComponent} with which this model object value is associated
+     * @param value String value to be converted (may be <code>null</code>)
+     * @return User which will be used in UI
+     */
     @Override
     public User getAsObject(FacesContext context, UIComponent component, String value) {
         if(value == null || value.isEmpty()){

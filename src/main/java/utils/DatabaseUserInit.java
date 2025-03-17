@@ -23,6 +23,12 @@ public class DatabaseUserInit implements ServletContextListener {
 
     Logger logger = LoggerFactory.getLogger(DatabaseUserInit.class);
 
+    /**
+     * During the start of Application Users will be initialized, if no users exists in local
+     * Database. Passwords will be stored as hashed Values in Database.
+     * @param event the ServletContextEvent containing the ServletContext that is being initialized
+     *
+     */
     @Override
     public void contextInitialized(ServletContextEvent event) {
         if(userDAO.findAll().isEmpty()) {
@@ -53,7 +59,7 @@ public class DatabaseUserInit implements ServletContextListener {
 
             User tester1 = new User();
             tester1.setUsername("Tester1");
-            tester1.setPassword(PasswordHasherUtil.hashPassword("Testing_PW")); // Passwort kann verschlüsselt werden
+            tester1.setPassword(PasswordHasherUtil.hashPassword("Testing_PW"));
             tester1.setUserRole(UserRoles.TESTER);
             userDAO.save(tester1);
 

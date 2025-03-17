@@ -15,18 +15,7 @@ public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public UserService() {
-
-    }
-
-
-    public void saveUser(User user) {
-        if (user != null) {
-            userDAO.save(user);
-        } else {
-            logger.error("User ist null!");
-        }
-    }
+    public UserService() {}
 
     public User getUserById(int id) {
         User user = userDAO.findById(id);
@@ -64,14 +53,5 @@ public class UserService {
             throw new IllegalArgumentException("Die Rolle eines Users darf nicht null sein!");
         }
         return usersByRole;
-    }
-
-    public void deleteUserById(int id) {
-        User user = userDAO.findById(id);
-        if (user == null) {
-            logger.trace("Es gibt kein Objekt mit der Id: " + id + " was gelöscht werden kann!");
-        } else {
-            userDAO.delete(user);
-        }
     }
 }

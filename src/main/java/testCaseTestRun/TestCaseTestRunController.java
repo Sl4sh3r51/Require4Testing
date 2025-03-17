@@ -49,18 +49,6 @@ public class TestCaseTestRunController implements Serializable {
 
     public TestCaseTestRunController() {}
 
-    public TestCaseTestRunController(TestCaseTestRunService testCaseTestRunService) {
-        this.testCaseTestRunService = testCaseTestRunService;
-    }
-
-    public TestRunController getTestRunController() {
-        return testRunController;
-    }
-
-    public void setTestRunController(TestRunController testRunController) {
-        this.testRunController = testRunController;
-    }
-
     public List<TestCaseTestRun> getAssignedTestCasesTestRuns() {
         return assignedTestCasesTestRuns = testCaseTestRunService.getTestCaseTestRunsForTester(loggedUser.getLoggedUser());
     }
@@ -118,13 +106,9 @@ public class TestCaseTestRunController implements Serializable {
         tempHours.remove(testCaseId);
         tempMinutes.remove(testCaseId);
         tempSeconds.remove(testCaseId);
-    }
-
-    public TestCaseTestRun getTestCaseTestRunById(int testCaseTestRunId) {
-        if(!testCaseTestRunService.getAllTestCaseTestRuns().isEmpty()){
-            return testCaseTestRun = testCaseTestRunService.getTestCaseTestRunById(testCaseTestRunId);
-        }
-        else return assignedTestCasesTestRuns.get(0);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Erfolg", "Zugewiesener Testfall wurde aktualisiert."));
+        selectedTestCases.clear();
     }
 
     public void createTestCaseTestRun() {
@@ -143,19 +127,6 @@ public class TestCaseTestRunController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Erfolg", "Testfälle wurden erfolgreich zugewiesen."));
         selectedTestCases.clear();
-    }
-
-    public List<TestCaseTestRun> getTestCaseTestRunsByResultStatus(boolean status) {
-        if(!testCaseTestRunService.getAllTestCaseTestRuns().isEmpty()){
-            return assignedTestCasesTestRuns = testCaseTestRunService.getTestCaseTestRunsByResultStatus(status);
-        }
-        else return assignedTestCasesTestRuns;
-    }
-
-    public void removeTestCaseTestRun(int testCaseTestRunId) {
-        if(!testCaseTestRunService.getAllTestCaseTestRuns().isEmpty()){
-            testCaseTestRunService.deleteTestCaseTestRunById(testCaseTestRunId);
-        }
     }
 
     private int parseIntOrDefault(Object value, int defaultValue) {

@@ -26,15 +26,6 @@ public class TestCaseTestRunDAO {
         }
     }
 
-    public TestCaseTestRun findById(int id) {
-        try {
-            return entityManager.find(TestCaseTestRun.class, id);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-
     public void save(TestCaseTestRun testCaseTestRun) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -60,36 +51,6 @@ public class TestCaseTestRunDAO {
             return query.getResultList();
         } catch (Exception e) {
             return new ArrayList<>();
-        }
-    }
-
-    public List<TestCaseTestRun> findByResultStatus(boolean resultStatus) {
-        try {
-            TypedQuery<TestCaseTestRun> query = entityManager.createQuery("SELECT a from TestCaseTestRun a where a.passed = :resultStatus", TestCaseTestRun.class);
-            query.setParameter("resultStatus", resultStatus);
-            return query.getResultList();
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
-    }
-
-
-    public void delete(TestCaseTestRun testCaseTestRun) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            if(testCaseTestRun != null) {
-                entityManager.remove(testCaseTestRun);
-            }
-            else {
-                logger.error("Es wurde kein Objekt gefunden, was gelöscht werden kann!");
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-            }
-            throw e;
         }
     }
 

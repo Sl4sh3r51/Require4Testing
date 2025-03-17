@@ -25,7 +25,6 @@ public class UserDAO {
         }
     }
 
-
     public void save(User user) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -42,8 +41,6 @@ public class UserDAO {
             }
             throw exception;
         }
-
-
     }
 
     public User findById(int id) {
@@ -86,25 +83,5 @@ public class UserDAO {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    public void delete(User user) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            if (user != null) {
-                entityManager.remove(user);
-            }
-            else {
-                logger.error("Es wurde kein User gefunden, der gelöscht werden kann!");
-            }
-            transaction.commit();
-        } catch (Exception exception) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            throw exception;
-        }
-
     }
 }

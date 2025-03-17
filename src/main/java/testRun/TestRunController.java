@@ -3,7 +3,6 @@ package testRun;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import user.User;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -24,10 +23,6 @@ public class TestRunController implements Serializable {
 
     public TestRunController() {}
 
-    public TestRunController(TestRunService testRunService) {
-        this.testRunService = testRunService;
-    }
-
     public List<TestRun> getAllTestRuns() {
         return testRuns = testRunService.getAllTestRuns();
     }
@@ -47,46 +42,11 @@ public class TestRunController implements Serializable {
         else return testRuns.get(0);
     }
 
-    public List<TestRun> getTestRunsByTester(User tester) {
-        if(!testRunService.getAllTestRuns().isEmpty()){
-            return testRuns = testRunService.getTestRunsByTester(tester);
-        }
-        else return testRuns;
-    }
-
-    public List<TestRun> sortTestRunsByExecutionDate(boolean ascending) {
-        if(!testRunService.getAllTestRuns().isEmpty()){
-            return testRunService.sortByExecutionDate(ascending);
-        }
-        else return testRuns;
-    }
-
-    public List<TestRun> sortTestRunsByExecutionTime(boolean ascending) {
-        if(!testRunService.getAllTestRuns().isEmpty()){
-            return testRunService.sortByExecutionTime(ascending);
-        }
-        else return testRuns;
-    }
-
-    public List<TestRun> sortTestRunsByRunNumber(boolean ascending) {
-        if(!testRunService.getAllTestRuns().isEmpty()){
-            return testRunService.sortByRunNumber(ascending);
-        }
-        else return testRuns;
-    }
-
     public void createTestRun() {
         testRun.setExecutionDate(LocalDate.now());
         testRun.setExecutionTime(Duration.ZERO);
 
         testRunService.saveTestRun(testRun);
     }
-
-    public void removeTestRun(int id) {
-        if(!testRunService.getAllTestRuns().isEmpty()){
-            testRunService.deleteTestRunById(id);
-        }
-    }
-
 
 }
