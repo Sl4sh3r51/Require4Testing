@@ -84,8 +84,9 @@ und ermöglicht das Validieren von Java-Objekten basierend auf Annotationen.
 Nach der erfolgreichen Installation von XAMPP muss dieses über den Control Panel gestartet werden.
 Starte im Control Panel die Instanzen Apache und MySQL wie im Bild zu sehen:
 ![ControlPanel](src/main/resources/Control_Panel.png)
+
 Über den Admin in MySQL erreicht man das Datenbankmanagementsystem, wo die Datenbank abgelegt werden soll.
-Erstelle nun eine neue Datenbank mit dem Namen "require4Testing", damit später die Datenbankoperationen darauf verweisen.
+Erstelle nun eine neue Datenbank mit dem Namen **"require4Testing"**, damit später die Datenbankoperationen darauf verweisen.
 ### Das Projekt bauen
 
 Das Projekt wird über Maven gebaut.
