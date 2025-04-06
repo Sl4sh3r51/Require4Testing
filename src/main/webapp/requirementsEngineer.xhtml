@@ -78,13 +78,13 @@
                         <f:converter converterId="localDateConverter"/>
                     </h:outputText>
                 </p:column>
-                <p:column>
-                    <p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger"
-                                     actionListener="#{requirementController.removeRequirement}" process="@this"
-                                     update="requirementsTable">
-                        <f:attribute name="selectedRequirement" value="#{req}"/>
-                    </p:commandButton>
-                </p:column>
+<!--                <p:column>-->
+<!--                    <p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger"-->
+<!--                                     actionListener="#{requirementController.removeRequirement}" process="@this"-->
+<!--                                     update="requirementsTable">-->
+<!--                        <f:attribute name="selectedRequirement" value="#{req}"/>-->
+<!--                    </p:commandButton>-->
+<!--                </p:column>-->
             </p:dataTable>
         </div>
     </h:form>
