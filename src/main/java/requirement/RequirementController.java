@@ -54,7 +54,7 @@ public class RequirementController implements Serializable {
     }
 
     public List<Requirement> getRequirements() {
-        return requirements = requirementService.getAllRequirements();
+        return requirements;
     }
 
     public List<Requirement> getFilteredRequirements() {

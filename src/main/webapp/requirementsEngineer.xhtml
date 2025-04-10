@@ -45,7 +45,7 @@
 
         <div class="styled-table-container">
             <p:dataTable id="requirementsTable" value="#{requirementController.requirements}" var="req"
-                         filteredValue="#{requirementController.filteredRequirements}" sortMode="multiple"
+                         filteredValue="#{requirementController.filteredRequirements}" sortMode="single"
                          widgetVar="requirementsTableWidget">
                 <p:column headerText="Titel">
                     <h:outputText value="#{req.title}"/>
@@ -62,18 +62,18 @@
                     </f:facet>
                     <h:outputText value="#{req.requirementStatus}"/>
                 </p:column>
-                <p:column headerText="Version" sortBy="#{req.version}">
+                <p:column headerText="Version" sortBy="#{req.version}" sortable="true" update="requirementsTable">
                     <h:outputText value="#{req.version}"/>
                 </p:column>
-                <p:column headerText="Priorität" sortBy="#{req.priority}">
+                <p:column headerText="Priorität" sortBy="#{req.priority}" sortable="true" update="requirementsTable">
                     <h:outputText value="#{req.priority}"/>
                 </p:column>
-                <p:column headerText="Erstelldatum" sortBy="#{req.creationDate}">
+                <p:column headerText="Erstelldatum" sortBy="#{req.creationDate}" sortable="true" update="requirementsTable">
                     <h:outputText value="#{req.creationDate}">
                         <f:converter converterId="localDateConverter"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Änderungsdatum" sortBy="#{req.modificationDate}">
+                <p:column headerText="Änderungsdatum" sortBy="#{req.modificationDate}" sortable="true" update="requirementsTable">
                     <h:outputText value="#{req.modificationDate}">
                         <f:converter converterId="localDateConverter"/>
                     </h:outputText>

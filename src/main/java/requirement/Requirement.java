@@ -30,7 +30,7 @@ public class Requirement implements Serializable {
 
     @Column
     @NotNull
-    private double version;
+    private Double version;
 
     @Column
     @NotNull
@@ -85,11 +85,11 @@ public class Requirement implements Serializable {
         this.requirementStatus = requirementStatus;
     }
 
-    public double getVersion() {
+    public Double getVersion() {
         return version;
     }
 
-    public void setVersion(double version) {
+    public void setVersion(Double version) {
         this.version = version;
     }
 
