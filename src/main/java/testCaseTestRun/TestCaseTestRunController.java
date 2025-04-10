@@ -108,7 +108,6 @@ public class TestCaseTestRunController implements Serializable {
         tempSeconds.remove(testCaseId);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Erfolg", "Zugewiesener Testfall wurde aktualisiert."));
-        selectedTestCases.clear();
     }
 
     public void createTestCaseTestRun() {
