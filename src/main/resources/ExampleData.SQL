@@ -21,3 +21,11 @@ VALUES
     (3, 6),
     (4, 7),
     (5, 8);
+
+Insert INTO TestCaseTestRun (passed,testfall, testrun)
+VALUES
+    (false,1,1),
+    (false,2,2),
+    (false,3,3),
+    (false,4,4),
+    (false,5,5);
